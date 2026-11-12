@@ -80,6 +80,6 @@ public class LoginUI : MonoBehaviour
 
     private void TryLogin()
     {
-        _logText.text = "Try Login";
+        NetworkManager.Instance.TestDataBase(_idInput.text, _passwordInput.text);
     }
 }
