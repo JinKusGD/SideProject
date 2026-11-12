@@ -20,7 +20,7 @@ public class Test_DBConnect : MonoBehaviour
 
             Debug.Log("MySQL 연결 성공!");
 
-            UpdateAccountPassword(connection);
+            DeleteAccount(connection);
         }
         catch (MySqlException e)
         {
@@ -83,5 +83,24 @@ public class Test_DBConnect : MonoBehaviour
         }
 
         Debug.Log($"{_testId} 비밀번호 수정 성공");
+    }
+
+    private void DeleteAccount(MySqlConnection connection)
+    {
+        string UpdatePasswordQuery = "DELETE FROM accounts WHERE account_id = @account_id";
+
+        using MySqlCommand command = new MySqlCommand(UpdatePasswordQuery, connection);
+
+        command.Parameters.AddWithValue("@account_id", _testId);
+
+        int rowResult = command.ExecuteNonQuery();
+
+        if (rowResult < 1)     
+        {
+            Debug.Log($"{_testId} 계정 삭제 실패");
+            return;
+        }
+
+        Debug.Log($"{_testId} 계정 삭제 성공");
     }
 }
