@@ -1,5 +1,7 @@
+using Cysharp.Threading.Tasks;
 using MySqlConnector;
 using System;
+using System.Threading;
 
 public enum DatabaseResult
 {
@@ -8,41 +10,50 @@ public enum DatabaseResult
     Success
 }
 
+public class DatabaseLoginPacket
+{
+    public readonly DatabaseResult DatabaseResult;
+    public readonly uint ResultUid;
+
+    public DatabaseLoginPacket(DatabaseResult databaseResult, uint uid)
+    {
+        DatabaseResult = databaseResult;
+        ResultUid = uid;
+    }
+}
+
 public class DatabaseService
 {
-    private readonly string _connectionString = $"Server={DBData.Server};Port={DBData.Port};Database={DBData.Database};UserID={DBData.UserID};Password={DBData.Password};";
+    private static readonly string ConnectionString = $"Server={DBData.Server};Port={DBData.Port};Database={DBData.Database};UserID={DBData.UserID};Password={DBData.Password};ConnectionTimeout={DBData.ConnectionTimeout};";
 
-    private readonly string _findAccountQuery = "SELECT account_uid FROM accounts WHERE account_id = @id AND account_password = @password";
+    private const string FindAccountQuery = "SELECT account_uid FROM accounts WHERE account_id = @id AND account_password = @password";
 
-    public DatabaseResult TryGetAccountUid(string id, string password, out uint uid)
+    public async UniTask<DatabaseLoginPacket> GetAccountUidAsync(string id, string password, CancellationToken cancellationToken)
     {
-        uid = uint.MinValue;
-
         try
         {
-            using MySqlConnection mySqlConnection = new MySqlConnection(_connectionString);
+            using MySqlConnection mySqlConnection = new MySqlConnection(ConnectionString);
 
-            mySqlConnection.Open();
+            await mySqlConnection.OpenAsync(cancellationToken);
 
-            using MySqlCommand mySqlCommand = new MySqlCommand(_findAccountQuery, mySqlConnection);
+            using MySqlCommand mySqlCommand = new MySqlCommand(FindAccountQuery, mySqlConnection);
 
             mySqlCommand.Parameters.AddWithValue("@id", id);
             mySqlCommand.Parameters.AddWithValue("@password", password);
 
-            object result = mySqlCommand.ExecuteScalar();
+            object result = await mySqlCommand.ExecuteScalarAsync(cancellationToken);
 
             if (result == null)
             {
-                return DatabaseResult.NotFound;
+                return new DatabaseLoginPacket(DatabaseResult.NotFound, uint.MinValue);
             }
 
-            uid = Convert.ToUInt32(result);
-
-            return DatabaseResult.Success;
+            return new DatabaseLoginPacket(DatabaseResult.Success, Convert.ToUInt32(result));
         }
         catch (MySqlException e)
         {
-            return DatabaseResult.Error;
+            DebugUtility.LogWarning(e.ToString());
+            return new DatabaseLoginPacket(DatabaseResult.Error, uint.MinValue);
         }
     }
 }
