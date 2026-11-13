@@ -48,7 +48,9 @@ public class DatabaseService
                 return new DatabaseLoginPacket(DatabaseResult.NotFound, uint.MinValue);
             }
 
-            return new DatabaseLoginPacket(DatabaseResult.Success, Convert.ToUInt32(result));
+            uint resultUid = Convert.ToUInt32(result);
+
+            return new DatabaseLoginPacket(DatabaseResult.Success, resultUid);
         }
         catch (MySqlException e)
         {

@@ -15,20 +15,27 @@ public class LoginUI : MonoBehaviour
     private const string LoginFailedMessage = "Incorrect ID or password.";
     private const string ConnectionErrorMessage = "Could not connect to the server.";
 
+    private const string GameSceneName = "Game";
+
     [SerializeField] private TMP_InputField _idInput;
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private Button _loginButton;
+    [SerializeField] private Button _signUpButton;
     [SerializeField] private TMP_Text _logText;
 
     private bool _isSubmitting;
 
     private void Awake()
     {
-        if (_idInput == null || _passwordInput == null || _loginButton == null || _logText == null)
-        {
-            DebugUtility.LogError("LoginUI references are not assigned.");
-            enabled = false;
-        }
+        bool hasAllReferences = true;
+
+        hasAllReferences &= UnityUtility.CheckReference(_idInput, nameof(_idInput), this);
+        hasAllReferences &= UnityUtility.CheckReference(_passwordInput, nameof(_passwordInput), this);
+        hasAllReferences &= UnityUtility.CheckReference(_loginButton, nameof(_loginButton), this);
+        hasAllReferences &= UnityUtility.CheckReference(_signUpButton, nameof(_signUpButton), this);
+        hasAllReferences &= UnityUtility.CheckReference(_logText, nameof(_logText), this);
+
+        enabled = hasAllReferences;
     }
 
     private void OnEnable()
@@ -36,6 +43,7 @@ public class LoginUI : MonoBehaviour
         _idInput.onSubmit.AddListener(OnInputSubmitted);
         _passwordInput.onSubmit.AddListener(OnInputSubmitted);
         _loginButton.onClick.AddListener(OnLoginButtonClicked);
+        _signUpButton.onClick.AddListener(OnSignUpButtonClicked);
     }
 
     private void OnDisable()
@@ -43,6 +51,7 @@ public class LoginUI : MonoBehaviour
         _idInput.onSubmit.RemoveListener(OnInputSubmitted);
         _passwordInput.onSubmit.RemoveListener(OnInputSubmitted);
         _loginButton.onClick.RemoveListener(OnLoginButtonClicked);
+        _signUpButton.onClick.RemoveListener(OnSignUpButtonClicked);
     }
 
     private void OnInputSubmitted(string _)
@@ -53,6 +62,11 @@ public class LoginUI : MonoBehaviour
     private void OnLoginButtonClicked()
     {
         SubmitAsync().Forget();
+    }
+
+    private void OnSignUpButtonClicked()
+    {
+        DebugUtility.Log("회원가입 UI 출력");
     }
 
     private async UniTask SubmitAsync()
@@ -122,7 +136,7 @@ public class LoginUI : MonoBehaviour
         {
             case DatabaseResult.Success:
                 _logText.text = LoginSuccessMessage;
-                LoadGameScene(); //임시
+                LoadGameScene(); // 임시
                 break;
             case DatabaseResult.NotFound:
                 _passwordInput.text = string.Empty;
@@ -141,6 +155,7 @@ public class LoginUI : MonoBehaviour
     {
         _isSubmitting = isSubmitting;
         _loginButton.interactable = !isSubmitting;
+        _signUpButton.interactable = !isSubmitting;
     }
 
     private void FocusInputField(TMP_InputField inputField, string message)
@@ -153,6 +168,6 @@ public class LoginUI : MonoBehaviour
 
     private void LoadGameScene()
     {
-        SceneManager.LoadScene("Game", LoadSceneMode.Single);
+        SceneManager.LoadScene(GameSceneName);
     }
 }
