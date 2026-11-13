@@ -1,40 +1,16 @@
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
-public class NetworkManager : MonoBehaviour
+public sealed class NetworkManager
 {
+    public static NetworkManager Instance { get; } = new NetworkManager();
+ 
     private readonly DatabaseService _databaseService = new DatabaseService();
 
-    public static NetworkManager Instance { get; private set; }
+    private NetworkManager() { }
 
-    private void Awake()
+    public UniTask<DatabaseLoginPacket> RequestLoginAsync(string id, string password, CancellationToken cancellationToken)
     {
-        if (Instance != null && Instance != this)
-        {
-            Debug.LogError($"Duplicate networkManager instance detected.");
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-    }
-
-    public bool TestDataBase(string id, string password)
-    {
-        DatabaseResult databaseResult = _databaseService.TryGetAccountUid(id, password, out uint uid);
-
-        switch (databaseResult)
-        {
-            case DatabaseResult.Error:
-                Debug.Log("실패");
-                return false;
-            case DatabaseResult.NotFound:
-                Debug.Log("없음");
-                return false;
-            case DatabaseResult.Success:
-                Debug.Log("성공");
-                return true;
-        }
-
-        return false;
+        return _databaseService.GetAccountUidAsync(id, password, cancellationToken);
     }
 }
