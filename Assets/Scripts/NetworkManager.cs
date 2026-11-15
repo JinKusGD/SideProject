@@ -13,4 +13,9 @@ public sealed class NetworkManager
     {
         return _databaseService.LoginAsync(id, password, cancellationToken);
     }
+
+    public UniTask<DBSignUpResult> RequestSignUpAsync(string id, string password, CancellationToken cancellationToken)
+    {
+        return _databaseService.SignUpAsync(id, password, cancellationToken);
+    }
 }

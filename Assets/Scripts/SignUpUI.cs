@@ -11,9 +11,14 @@ public class SignUpUI : MonoBehaviour
     private const string EmptyPasswordMessage = "Please enter your password.";
     private const string EmptyPasswordConfirmMessage = "Please confirm your password.";
     private const string PasswordMismatchMessage = "Passwords do not match.";
+
     private const string SigningUpMessage = "Creating account...";
+
+    private const string SignUpSuccessMessage = "Account created.";
     private const string DuplicateIdMessage = "This ID is already in use.";
     private const string ConnectionErrorMessage = "Could not connect to the server.";
+    private const string TimeoutMessage = "The request timed out. Please try again.";
+    private const string UnknownErrorMessage = "Sign up failed. Please try again later.";
 
     [SerializeField] private TMP_InputField _idInput;
     [SerializeField] private TMP_InputField _passwordInput;
@@ -23,9 +28,6 @@ public class SignUpUI : MonoBehaviour
     [SerializeField] private TMP_Text _logText;
 
     private bool _isSubmitting;
-
-    //public event Action<string> SignUpCompleted;
-    //public event Action BackRequested;
 
     private void Awake()
     {
@@ -73,7 +75,7 @@ public class SignUpUI : MonoBehaviour
 
     private void OnBackButtonClicked()
     {
-       // BackRequested?.Invoke();
+        //Todo
     }
 
     private async UniTask SubmitAsync()
@@ -92,41 +94,32 @@ public class SignUpUI : MonoBehaviour
             return;
         }
 
-        bool isPasswordMatched = string.Equals(password, passwordConfirm, StringComparison.Ordinal);
+        SetSubmitting(true);
+        _logText.text = SigningUpMessage;
 
-        if (!isPasswordMatched)
+        CancellationToken cancellationToken = destroyCancellationToken;
+        DBSignUpResult dbSignUpResult;
+
+        try
         {
-            FocusInputField(_passwordConfirmInput, PasswordMismatchMessage);
+            dbSignUpResult = await NetworkManager.Instance.RequestSignUpAsync(id, password, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+        catch (Exception exception)
+        {
+            DebugUtility.LogError(exception.ToString());
+            dbSignUpResult = DBSignUpResult.UnknownError;
+        }
+
+        if (cancellationToken.IsCancellationRequested)
+        {
             return;
         }
 
-        CancellationToken cancellationToken = destroyCancellationToken;
-
-        //SetSubmitting(true);
-        //_logText.text = SigningUpMessage;
-
-        //DatabaseResult result;
-
-        //try
-        //{
-        //    result = await LoginManager.Instance.SignUpAsync(id, password, cancellationToken);
-        //}
-        //catch (OperationCanceledException)
-        //{
-        //    return;
-        //}
-        //catch (Exception e)
-        //{
-        //    DebugUtility.LogError(e.ToString());
-        //    result = DatabaseResult.Error;
-        //}
-
-        //if (cancellationToken.IsCancellationRequested)
-        //{
-        //    return;
-        //}
-
-        //HandleSignUpResult(result, id);
+        HandleSignUpResult(dbSignUpResult);
     }
 
     private bool ValidateInput(string id, string password, string passwordConfirm)
@@ -149,26 +142,41 @@ public class SignUpUI : MonoBehaviour
             return false;
         }
 
+        bool isPasswordMatched = string.Equals(password, passwordConfirm, StringComparison.Ordinal);
+
+        if (!isPasswordMatched)
+        {
+            FocusInputField(_passwordConfirmInput, PasswordMismatchMessage);
+            return false;
+        }
+
         return true;
     }
 
-    //private void HandleSignUpResult(DatabaseResult result, string id)
-    //{
-    //    switch (result)
-    //    {
-    //        case DatabaseResult.Success:
-    //            _logText.text = string.Empty;
-    //            SignUpCompleted?.Invoke(id);
-    //            break;
-    //        case DatabaseResult.Duplicate:
-    //            FocusInputField(_idInput, DuplicateIdMessage);
-    //            break;
-    //        case DatabaseResult.Error:
-    //        default:
-    //            _logText.text = ConnectionErrorMessage;
-    //            break;
-    //    }
-    //}
+    private void HandleSignUpResult(DBSignUpResult dbSignUpResult)
+    {
+        SetSubmitting(false);
+
+        switch (dbSignUpResult)
+        {
+            case DBSignUpResult.Success:
+                ResetForm();
+                _logText.text = SignUpSuccessMessage;
+                break;
+            case DBSignUpResult.AccountAlreadyExists:
+                FocusInputField(_idInput, DuplicateIdMessage);
+                break;
+            case DBSignUpResult.ServerUnavailable:
+                _logText.text = ConnectionErrorMessage;
+                break;
+            case DBSignUpResult.Timeout:
+                _logText.text = TimeoutMessage;
+                break;
+            default:
+                _logText.text = UnknownErrorMessage;
+                break;
+        }
+    }
 
     private void ResetForm()
     {
