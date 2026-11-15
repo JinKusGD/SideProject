@@ -11,9 +11,12 @@ public class LoginUI : MonoBehaviour
     private const string EmptyIdMessage = "Please enter your ID.";
     private const string EmptyPasswordMessage = "Please enter your password.";
     private const string LoggingInMessage = "Logging in...";
+
     private const string LoginSuccessMessage = "Login successful.";
     private const string LoginFailedMessage = "Incorrect ID or password.";
+    private const string TimeoutMessage = "The request timed out. Please try again.";
     private const string ConnectionErrorMessage = "Could not connect to the server.";
+    private const string UnknownErrorMessage = "Login failed. Please try again later.";
 
     private const string GameSceneName = "Game";
 
@@ -66,7 +69,7 @@ public class LoginUI : MonoBehaviour
 
     private void OnSignUpButtonClicked()
     {
-        DebugUtility.Log("회원가입 UI 출력");
+        //Todo
     }
 
     private async UniTask SubmitAsync()
@@ -84,25 +87,24 @@ public class LoginUI : MonoBehaviour
             return;
         }
 
-        CancellationToken cancellationToken = destroyCancellationToken;
-
         SetSubmitting(true);
         _logText.text = LoggingInMessage;
 
-        DatabaseResult result;
+        CancellationToken cancellationToken = destroyCancellationToken;
+        DBLoginResult dbLoginResult;
 
         try
         {
-            result = await LoginManager.Instance.LoginAsync(id, password, cancellationToken);
+            dbLoginResult = await LoginManager.Instance.LoginAsync(id, password, cancellationToken);
         }
         catch (OperationCanceledException)
         {
             return;
         }
-        catch (Exception e)
+        catch (Exception exception)
         {
-            DebugUtility.LogError(e.ToString());
-            result = DatabaseResult.Error;
+            DebugUtility.LogError(exception.ToString());
+            dbLoginResult = DBLoginResult.UnknownError;
         }
 
         if (cancellationToken.IsCancellationRequested)
@@ -110,7 +112,7 @@ public class LoginUI : MonoBehaviour
             return;
         }
 
-        HandleLoginResult(result);
+        HandleLoginResult(dbLoginResult);
     }
 
     private bool ValidateInput(string id, string password)
@@ -130,23 +132,31 @@ public class LoginUI : MonoBehaviour
         return true;
     }
 
-    private void HandleLoginResult(DatabaseResult result)
+    private void HandleLoginResult(DBLoginResult dbLoginResult)
     {
-        switch (result)
+        if (dbLoginResult == DBLoginResult.Success)
         {
-            case DatabaseResult.Success:
-                _logText.text = LoginSuccessMessage;
-                LoadGameScene(); // 임시
-                break;
-            case DatabaseResult.NotFound:
+            _logText.text = LoginSuccessMessage;
+            LoadGameScene(); // 임시
+            return;
+        }
+
+        SetSubmitting(false);
+
+        switch (dbLoginResult)
+        {
+            case DBLoginResult.AccountNotFound:
                 _passwordInput.text = string.Empty;
                 FocusInputField(_passwordInput, LoginFailedMessage);
-                SetSubmitting(false);
                 break;
-            case DatabaseResult.Error:
-            default:
+            case DBLoginResult.ServerUnavailable:
                 _logText.text = ConnectionErrorMessage;
-                SetSubmitting(false);
+                break;
+            case DBLoginResult.Timeout:
+                _logText.text = TimeoutMessage;
+                break;
+            default:
+                _logText.text = UnknownErrorMessage;
                 break;
         }
     }

@@ -7,17 +7,17 @@ public sealed class LoginManager
 
     private LoginManager() { }
 
-    public uint Uid { get; private set; }
+    public uint AccountUid { get; private set; }
 
-    public async UniTask<DatabaseResult> LoginAsync(string id, string password, CancellationToken cancellationToken)
+    public async UniTask<DBLoginResult> LoginAsync(string id, string password, CancellationToken cancellationToken)
     {
-        DatabaseLoginPacket databaseLoginPacket = await NetworkManager.Instance.RequestLoginAsync(id, password, cancellationToken);
+        DBLoginPacket dbLoginPacket = await NetworkManager.Instance.RequestLoginAsync(id, password, cancellationToken);
 
-        if (databaseLoginPacket.DatabaseResult == DatabaseResult.Success)
+        if (dbLoginPacket.DBLoginResult == DBLoginResult.Success)
         {
-            Uid = databaseLoginPacket.ResultUid;
+            AccountUid = dbLoginPacket.AccountUid;
         }
 
-        return databaseLoginPacket.DatabaseResult;
+        return dbLoginPacket.DBLoginResult;
     }
 }

@@ -9,8 +9,8 @@ public sealed class NetworkManager
 
     private NetworkManager() { }
 
-    public UniTask<DatabaseLoginPacket> RequestLoginAsync(string id, string password, CancellationToken cancellationToken)
+    public UniTask<DBLoginPacket> RequestLoginAsync(string id, string password, CancellationToken cancellationToken)
     {
-        return _databaseService.GetAccountUidAsync(id, password, cancellationToken);
+        return _databaseService.LoginAsync(id, password, cancellationToken);
     }
 }
