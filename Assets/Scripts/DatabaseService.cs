@@ -20,7 +20,9 @@ public class DatabaseService
     private static readonly string ConnectionString = $"Server={DBData.Server};Port={DBData.Port};Database={DBData.Database};UserID={DBData.UserID};Password={DBData.Password};ConnectionTimeout={DBData.ConnectionTimeout};";
 
     private const string SelectAccountUidQuery = "SELECT account_uid FROM accounts WHERE account_id = @id AND account_password = @password";
-    
+    private const string CheckAccountIdExistsQuery = "SELECT 1 FROM accounts WHERE account_id = @id LIMIT 1";
+    private const string InsertAccountQuery = "INSERT INTO accounts (account_id, account_password) VALUES (@id, @password)";
+
     public async UniTask<DBLoginPacket> LoginAsync(string id, string password, CancellationToken cancellationToken)
     {
         uint accountUid = uint.MinValue;
@@ -36,12 +38,12 @@ public class DatabaseService
 
         try
         {
-            using MySqlCommand mySqlCommand = new MySqlCommand(SelectAccountUidQuery, mySqlConnection);
+            using MySqlCommand selectAccountUidCommand = new MySqlCommand(SelectAccountUidQuery, mySqlConnection);
 
-            mySqlCommand.Parameters.AddWithValue("@id", id);
-            mySqlCommand.Parameters.AddWithValue("@password", password);
+            selectAccountUidCommand.Parameters.AddWithValue("@id", id);
+            selectAccountUidCommand.Parameters.AddWithValue("@password", password);
 
-            object queryResult = await mySqlCommand.ExecuteScalarAsync(cancellationToken);
+            object queryResult = await selectAccountUidCommand.ExecuteScalarAsync(cancellationToken);
 
             if (queryResult == null)
             {
@@ -61,6 +63,57 @@ public class DatabaseService
             DBLoginResult dbLoginResult = isCommandTimeoutExpired ? DBLoginResult.Timeout : DBLoginResult.UnknownError;
 
             return new DBLoginPacket(dbLoginResult, accountUid);
+        }
+    }
+
+    public async UniTask<DBSignUpResult> SignUpAsync(string id, string password, CancellationToken cancellationToken)
+    {
+        using MySqlConnection mySqlConnection = new MySqlConnection(ConnectionString);
+
+        DBConnectionResult dbConnectionResult = await ConnectDatabaseAsync(mySqlConnection, cancellationToken);
+
+        if (dbConnectionResult != DBConnectionResult.Success)
+        {
+            return DBSignUpResult.ServerUnavailable;
+        }
+
+        try
+        {
+            using (MySqlCommand checkAccountIdExistsCommand = new MySqlCommand(CheckAccountIdExistsQuery, mySqlConnection))
+            {
+                checkAccountIdExistsCommand.Parameters.AddWithValue("@id", id);
+
+                object existingAccount = await checkAccountIdExistsCommand.ExecuteScalarAsync(cancellationToken);
+
+                if (existingAccount != null)
+                {
+                    return DBSignUpResult.AccountAlreadyExists;
+                }
+            }
+
+            using MySqlCommand insertAccountCommand = new MySqlCommand(InsertAccountQuery, mySqlConnection);
+
+            insertAccountCommand.Parameters.AddWithValue("@id", id);
+            insertAccountCommand.Parameters.AddWithValue("@password", password);
+
+            int insertedRowCount = await insertAccountCommand.ExecuteNonQueryAsync(cancellationToken);
+
+            return insertedRowCount > 0 ? DBSignUpResult.Success : DBSignUpResult.UnknownError;
+        }
+        catch (MySqlException exception)
+        {
+            DebugUtility.LogWarning(exception.ToString());
+
+            switch (exception.ErrorCode)
+            {
+                case MySqlErrorCode.DuplicateKeyEntry:
+                    // 조회와 삽입 사이에 같은 ID가 먼저 등록된 경우
+                    return DBSignUpResult.AccountAlreadyExists;
+                case MySqlErrorCode.CommandTimeoutExpired:
+                    return DBSignUpResult.Timeout;
+                default:
+                    return DBSignUpResult.UnknownError;
+            }
         }
     }
 
