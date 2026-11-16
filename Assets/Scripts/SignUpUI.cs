@@ -5,19 +5,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SignUpUI : UIBase
+public class SignUpUI : AccountFormUI
 {
-    private const string EmptyIdMessage = "Please enter your ID.";
-    private const string EmptyPasswordMessage = "Please enter your password.";
     private const string EmptyPasswordConfirmMessage = "Please confirm your password.";
     private const string PasswordMismatchMessage = "Passwords do not match.";
 
     private const string SigningUpMessage = "Creating account...";
 
-    private const string SignUpSuccessMessage = "Account created.";
     private const string DuplicateIdMessage = "This ID is already in use.";
-    private const string ConnectionErrorMessage = "Could not connect to the server.";
-    private const string TimeoutMessage = "The request timed out. Please try again.";
     private const string UnknownErrorMessage = "Sign up failed. Please try again later.";
 
     [SerializeField] private TMP_InputField _idInput;
@@ -25,11 +20,9 @@ public class SignUpUI : UIBase
     [SerializeField] private TMP_InputField _passwordConfirmInput;
     [SerializeField] private Button _signUpButton;
     [SerializeField] private Button _backButton;
-    [SerializeField] private TMP_Text _logText;
-    
-    public event Action BackRequested;
 
-    private bool _isSubmitting;
+    public event Action BackRequested;
+    public event Action<string> SignUpCompleted;
 
     private void Awake()
     {
@@ -69,6 +62,12 @@ public class SignUpUI : UIBase
         base.Show();
     }
 
+    protected override void SetButtonsInteractable(bool isInteractable)
+    {
+        _signUpButton.interactable = isInteractable;
+        _backButton.interactable = isInteractable;
+    }
+
     private void OnInputSubmitted(string _)
     {
         SubmitAsync().Forget();
@@ -86,7 +85,7 @@ public class SignUpUI : UIBase
 
     private async UniTask SubmitAsync()
     {
-        if (_isSubmitting)
+        if (IsSubmitting)
         {
             return;
         }
@@ -108,7 +107,7 @@ public class SignUpUI : UIBase
 
         try
         {
-            dbSignUpResult = await NetworkManager.Instance.RequestSignUpAsync(id, password, cancellationToken);
+            dbSignUpResult = await AccountManager.Instance.SignUpAsync(id, password, cancellationToken);
         }
         catch (OperationCanceledException)
         {
@@ -117,7 +116,7 @@ public class SignUpUI : UIBase
         catch (Exception exception)
         {
             DebugUtility.LogError(exception.ToString());
-            dbSignUpResult = DBSignUpResult.UnknownError;
+            return;
         }
 
         if (cancellationToken.IsCancellationRequested)
@@ -125,7 +124,7 @@ public class SignUpUI : UIBase
             return;
         }
 
-        HandleSignUpResult(dbSignUpResult);
+        HandleSignUpResult(dbSignUpResult, id);
     }
 
     private bool ValidateInput(string id, string password, string passwordConfirm)
@@ -159,15 +158,14 @@ public class SignUpUI : UIBase
         return true;
     }
 
-    private void HandleSignUpResult(DBSignUpResult dbSignUpResult)
+    private void HandleSignUpResult(DBSignUpResult dbSignUpResult, string id)
     {
         SetSubmitting(false);
 
         switch (dbSignUpResult)
         {
             case DBSignUpResult.Success:
-                ResetForm();
-                _logText.text = SignUpSuccessMessage;
+                SignUpCompleted?.Invoke(id);
                 break;
             case DBSignUpResult.AccountAlreadyExists:
                 FocusInputField(_idInput, DuplicateIdMessage);
@@ -190,20 +188,5 @@ public class SignUpUI : UIBase
         _passwordInput.text = string.Empty;
         _passwordConfirmInput.text = string.Empty;
         _logText.text = string.Empty;
-    }
-
-    private void SetSubmitting(bool isSubmitting)
-    {
-        _isSubmitting = isSubmitting;
-        _signUpButton.interactable = !isSubmitting;
-        _backButton.interactable = !isSubmitting;
-    }
-
-    private void FocusInputField(TMP_InputField inputField, string message)
-    {
-        inputField.Select();
-        inputField.ActivateInputField();
-
-        _logText.text = message;
     }
 }

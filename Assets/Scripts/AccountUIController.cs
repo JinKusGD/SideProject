@@ -24,12 +24,14 @@ public class AccountUIController : MonoBehaviour
     {
         _loginUI.SignUpRequested += OnSignUpRequested;
         _signUpUI.BackRequested += OnBackRequested;
+        _signUpUI.SignUpCompleted += OnSignUpCompleted;
     }
 
     private void OnDisable()
     {
         _loginUI.SignUpRequested -= OnSignUpRequested;
         _signUpUI.BackRequested -= OnBackRequested;
+        _signUpUI.SignUpCompleted -= OnSignUpCompleted;
     }
 
     private void OnSignUpRequested()
@@ -40,6 +42,12 @@ public class AccountUIController : MonoBehaviour
     private void OnBackRequested()
     {
         ShowLogin();
+    }
+
+    private void OnSignUpCompleted(string id)
+    {
+        ShowLogin();
+        _loginUI.ShowSignUpCompleted(id);
     }
 
     private void ShowLogin()

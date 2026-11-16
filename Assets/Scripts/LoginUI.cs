@@ -6,17 +6,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LoginUI : UIBase
+public class LoginUI : AccountFormUI
 {
-    private const string EmptyIdMessage = "Please enter your ID.";
-    private const string EmptyPasswordMessage = "Please enter your password.";
     private const string LoggingInMessage = "Logging in...";
 
-    private const string LoginSuccessMessage = "Login successful.";
     private const string LoginFailedMessage = "Incorrect ID or password.";
-    private const string TimeoutMessage = "The request timed out. Please try again.";
-    private const string ConnectionErrorMessage = "Could not connect to the server.";
     private const string UnknownErrorMessage = "Login failed. Please try again later.";
+
+    private const string SignUpCompletedMessage = "Account created. Please log in.";
 
     private const string GameSceneName = "Game";
 
@@ -24,11 +21,8 @@ public class LoginUI : UIBase
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private Button _loginButton;
     [SerializeField] private Button _signUpButton;
-    [SerializeField] private TMP_Text _logText;
 
     public event Action SignUpRequested;
-
-    private bool _isSubmitting;
 
     private void Awake()
     {
@@ -67,6 +61,18 @@ public class LoginUI : UIBase
         base.Show();
     }
 
+    public void ShowSignUpCompleted(string id)
+    {
+        _idInput.text = id;
+        FocusInputField(_passwordInput, SignUpCompletedMessage);
+    }
+
+    protected override void SetButtonsInteractable(bool isInteractable)
+    {
+        _loginButton.interactable = isInteractable;
+        _signUpButton.interactable = isInteractable;
+    }
+
     private void OnInputSubmitted(string _)
     {
         SubmitAsync().Forget();
@@ -84,7 +90,7 @@ public class LoginUI : UIBase
 
     private async UniTask SubmitAsync()
     {
-        if (_isSubmitting)
+        if (IsSubmitting)
         {
             return;
         }
@@ -105,7 +111,7 @@ public class LoginUI : UIBase
 
         try
         {
-            dbLoginResult = await LoginManager.Instance.LoginAsync(id, password, cancellationToken);
+            dbLoginResult = await AccountManager.Instance.LoginAsync(id, password, cancellationToken);
         }
         catch (OperationCanceledException)
         {
@@ -114,7 +120,7 @@ public class LoginUI : UIBase
         catch (Exception exception)
         {
             DebugUtility.LogError(exception.ToString());
-            dbLoginResult = DBLoginResult.UnknownError;
+            return;
         }
 
         if (cancellationToken.IsCancellationRequested)
@@ -146,7 +152,6 @@ public class LoginUI : UIBase
     {
         if (dbLoginResult == DBLoginResult.Success)
         {
-            _logText.text = LoginSuccessMessage;
             LoadGameScene(); // 임시
             return;
         }
@@ -169,21 +174,6 @@ public class LoginUI : UIBase
                 _logText.text = UnknownErrorMessage;
                 break;
         }
-    }
-
-    private void SetSubmitting(bool isSubmitting)
-    {
-        _isSubmitting = isSubmitting;
-        _loginButton.interactable = !isSubmitting;
-        _signUpButton.interactable = !isSubmitting;
-    }
-
-    private void FocusInputField(TMP_InputField inputField, string message)
-    {
-        inputField.Select();
-        inputField.ActivateInputField();
-
-        _logText.text = message;
     }
 
     private void LoadGameScene()

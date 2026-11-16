@@ -1,11 +1,11 @@
 using Cysharp.Threading.Tasks;
 using System.Threading;
 
-public sealed class LoginManager
+public sealed class AccountManager
 {
-    public static LoginManager Instance { get; } = new LoginManager();
+    public static AccountManager Instance { get; } = new AccountManager();
 
-    private LoginManager() { }
+    private AccountManager() { }
 
     public uint AccountUid { get; private set; }
 
@@ -19,5 +19,10 @@ public sealed class LoginManager
         }
 
         return dbLoginPacket.DBLoginResult;
+    }
+
+    public UniTask<DBSignUpResult> SignUpAsync(string id, string password, CancellationToken cancellationToken)
+    {
+        return NetworkManager.Instance.RequestSignUpAsync(id, password, cancellationToken);
     }
 }

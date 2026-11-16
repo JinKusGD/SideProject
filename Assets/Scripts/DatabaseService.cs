@@ -20,7 +20,6 @@ public class DatabaseService
     private static readonly string ConnectionString = $"Server={DBData.Server};Port={DBData.Port};Database={DBData.Database};UserID={DBData.UserID};Password={DBData.Password};ConnectionTimeout={DBData.ConnectionTimeout};";
 
     private const string SelectAccountUidQuery = "SELECT account_uid FROM accounts WHERE account_id = @id AND account_password = @password";
-    private const string CheckAccountIdExistsQuery = "SELECT 1 FROM accounts WHERE account_id = @id LIMIT 1";
     private const string InsertAccountQuery = "INSERT INTO accounts (account_id, account_password) VALUES (@id, @password)";
 
     public async UniTask<DBLoginPacket> LoginAsync(string id, string password, CancellationToken cancellationToken)
@@ -79,18 +78,6 @@ public class DatabaseService
 
         try
         {
-            using (MySqlCommand checkAccountIdExistsCommand = new MySqlCommand(CheckAccountIdExistsQuery, mySqlConnection))
-            {
-                checkAccountIdExistsCommand.Parameters.AddWithValue("@id", id);
-
-                object existingAccount = await checkAccountIdExistsCommand.ExecuteScalarAsync(cancellationToken);
-
-                if (existingAccount != null)
-                {
-                    return DBSignUpResult.AccountAlreadyExists;
-                }
-            }
-
             using MySqlCommand insertAccountCommand = new MySqlCommand(InsertAccountQuery, mySqlConnection);
 
             insertAccountCommand.Parameters.AddWithValue("@id", id);
@@ -102,18 +89,19 @@ public class DatabaseService
         }
         catch (MySqlException exception)
         {
+            bool isDuplicateId = exception.ErrorCode == MySqlErrorCode.DuplicateKeyEntry;
+
+            if (isDuplicateId)
+            {
+                // account_id가 기본 키라서 이미 있는 ID면 INSERT가 중복 키 에러로 실패한다.
+                return DBSignUpResult.AccountAlreadyExists;
+            }
+
             DebugUtility.LogWarning(exception.ToString());
 
-            switch (exception.ErrorCode)
-            {
-                case MySqlErrorCode.DuplicateKeyEntry:
-                    // 조회와 삽입 사이에 같은 ID가 먼저 등록된 경우
-                    return DBSignUpResult.AccountAlreadyExists;
-                case MySqlErrorCode.CommandTimeoutExpired:
-                    return DBSignUpResult.Timeout;
-                default:
-                    return DBSignUpResult.UnknownError;
-            }
+            bool isCommandTimeoutExpired = exception.ErrorCode == MySqlErrorCode.CommandTimeoutExpired;
+
+            return isCommandTimeoutExpired ? DBSignUpResult.Timeout : DBSignUpResult.UnknownError;
         }
     }
 
