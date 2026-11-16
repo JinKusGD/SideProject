@@ -3,7 +3,6 @@ using System;
 using System.Threading;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoginUI : AccountFormUI
@@ -56,7 +55,7 @@ public class LoginUI : AccountFormUI
     public override void Show()
     {
         _passwordInput.text = string.Empty;
-        _logText.text = string.Empty;
+        ClearMessage();
 
         base.Show();
     }
@@ -64,7 +63,8 @@ public class LoginUI : AccountFormUI
     public void ShowSignUpCompleted(string id)
     {
         _idInput.text = id;
-        FocusInputField(_passwordInput, SignUpCompletedMessage);
+        ShowSuccess(SignUpCompletedMessage);
+        FocusInputField(_passwordInput);
     }
 
     protected override void SetButtonsInteractable(bool isInteractable)
@@ -104,7 +104,7 @@ public class LoginUI : AccountFormUI
         }
 
         SetSubmitting(true);
-        _logText.text = LoggingInMessage;
+        ShowInfo(LoggingInMessage);
 
         CancellationToken cancellationToken = destroyCancellationToken;
         DBLoginResult dbLoginResult;
@@ -135,13 +135,13 @@ public class LoginUI : AccountFormUI
     {
         if (string.IsNullOrWhiteSpace(id))
         {
-            FocusInputField(_idInput, EmptyIdMessage);
+            ShowErrorAndFocus(_idInput, EmptyIdMessage);
             return false;
         }
 
         if (string.IsNullOrWhiteSpace(password))
         {
-            FocusInputField(_passwordInput, EmptyPasswordMessage);
+            ShowErrorAndFocus(_passwordInput, EmptyPasswordMessage);
             return false;
         }
 
@@ -152,7 +152,7 @@ public class LoginUI : AccountFormUI
     {
         if (dbLoginResult == DBLoginResult.Success)
         {
-            LoadGameScene(); // 임시
+            SceneLoader.Load(GameSceneName);
             return;
         }
 
@@ -162,22 +162,17 @@ public class LoginUI : AccountFormUI
         {
             case DBLoginResult.AccountNotFound:
                 _passwordInput.text = string.Empty;
-                FocusInputField(_passwordInput, LoginFailedMessage);
+                ShowErrorAndFocus(_passwordInput, LoginFailedMessage);
                 break;
             case DBLoginResult.ServerUnavailable:
-                _logText.text = ConnectionErrorMessage;
+                ShowError(ConnectionErrorMessage);
                 break;
             case DBLoginResult.Timeout:
-                _logText.text = TimeoutMessage;
+                ShowError(TimeoutMessage);
                 break;
             default:
-                _logText.text = UnknownErrorMessage;
+                ShowError(UnknownErrorMessage);
                 break;
         }
-    }
-
-    private void LoadGameScene()
-    {
-        SceneManager.LoadScene(GameSceneName);
     }
 }

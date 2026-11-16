@@ -100,7 +100,7 @@ public class SignUpUI : AccountFormUI
         }
 
         SetSubmitting(true);
-        _logText.text = SigningUpMessage;
+        ShowInfo(SigningUpMessage);
 
         CancellationToken cancellationToken = destroyCancellationToken;
         DBSignUpResult dbSignUpResult;
@@ -131,19 +131,19 @@ public class SignUpUI : AccountFormUI
     {
         if (string.IsNullOrWhiteSpace(id))
         {
-            FocusInputField(_idInput, EmptyIdMessage);
+            ShowErrorAndFocus(_idInput, EmptyIdMessage);
             return false;
         }
 
         if (string.IsNullOrWhiteSpace(password))
         {
-            FocusInputField(_passwordInput, EmptyPasswordMessage);
+            ShowErrorAndFocus(_passwordInput, EmptyPasswordMessage);
             return false;
         }
 
         if (string.IsNullOrWhiteSpace(passwordConfirm))
         {
-            FocusInputField(_passwordConfirmInput, EmptyPasswordConfirmMessage);
+            ShowErrorAndFocus(_passwordConfirmInput, EmptyPasswordConfirmMessage);
             return false;
         }
 
@@ -151,7 +151,7 @@ public class SignUpUI : AccountFormUI
 
         if (!isPasswordMatched)
         {
-            FocusInputField(_passwordConfirmInput, PasswordMismatchMessage);
+            ShowErrorAndFocus(_passwordConfirmInput, PasswordMismatchMessage);
             return false;
         }
 
@@ -168,16 +168,16 @@ public class SignUpUI : AccountFormUI
                 SignUpCompleted?.Invoke(id);
                 break;
             case DBSignUpResult.AccountAlreadyExists:
-                FocusInputField(_idInput, DuplicateIdMessage);
+                ShowErrorAndFocus(_idInput, DuplicateIdMessage);
                 break;
             case DBSignUpResult.ServerUnavailable:
-                _logText.text = ConnectionErrorMessage;
+                ShowError(ConnectionErrorMessage);
                 break;
             case DBSignUpResult.Timeout:
-                _logText.text = TimeoutMessage;
+                ShowError(TimeoutMessage);
                 break;
             default:
-                _logText.text = UnknownErrorMessage;
+                ShowError(UnknownErrorMessage);
                 break;
         }
     }
@@ -187,6 +187,6 @@ public class SignUpUI : AccountFormUI
         _idInput.text = string.Empty;
         _passwordInput.text = string.Empty;
         _passwordConfirmInput.text = string.Empty;
-        _logText.text = string.Empty;
+        ClearMessage();
     }
 }
