@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LoginUI : MonoBehaviour
+public class LoginUI : UIBase
 {
     private const string EmptyIdMessage = "Please enter your ID.";
     private const string EmptyPasswordMessage = "Please enter your password.";
@@ -25,6 +25,8 @@ public class LoginUI : MonoBehaviour
     [SerializeField] private Button _loginButton;
     [SerializeField] private Button _signUpButton;
     [SerializeField] private TMP_Text _logText;
+
+    public event Action SignUpRequested;
 
     private bool _isSubmitting;
 
@@ -57,6 +59,14 @@ public class LoginUI : MonoBehaviour
         _signUpButton.onClick.RemoveListener(OnSignUpButtonClicked);
     }
 
+    public override void Show()
+    {
+        _passwordInput.text = string.Empty;
+        _logText.text = string.Empty;
+
+        base.Show();
+    }
+
     private void OnInputSubmitted(string _)
     {
         SubmitAsync().Forget();
@@ -69,7 +79,7 @@ public class LoginUI : MonoBehaviour
 
     private void OnSignUpButtonClicked()
     {
-        //Todo
+        SignUpRequested?.Invoke();
     }
 
     private async UniTask SubmitAsync()

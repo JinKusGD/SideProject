@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SignUpUI : MonoBehaviour
+public class SignUpUI : UIBase
 {
     private const string EmptyIdMessage = "Please enter your ID.";
     private const string EmptyPasswordMessage = "Please enter your password.";
@@ -26,6 +26,8 @@ public class SignUpUI : MonoBehaviour
     [SerializeField] private Button _signUpButton;
     [SerializeField] private Button _backButton;
     [SerializeField] private TMP_Text _logText;
+    
+    public event Action BackRequested;
 
     private bool _isSubmitting;
 
@@ -45,8 +47,6 @@ public class SignUpUI : MonoBehaviour
 
     private void OnEnable()
     {
-        ResetForm();
-
         _idInput.onSubmit.AddListener(OnInputSubmitted);
         _passwordInput.onSubmit.AddListener(OnInputSubmitted);
         _passwordConfirmInput.onSubmit.AddListener(OnInputSubmitted);
@@ -63,6 +63,12 @@ public class SignUpUI : MonoBehaviour
         _backButton.onClick.RemoveListener(OnBackButtonClicked);
     }
 
+    public override void Show()
+    {
+        ResetForm();
+        base.Show();
+    }
+
     private void OnInputSubmitted(string _)
     {
         SubmitAsync().Forget();
@@ -75,7 +81,7 @@ public class SignUpUI : MonoBehaviour
 
     private void OnBackButtonClicked()
     {
-        //Todo
+        BackRequested?.Invoke();
     }
 
     private async UniTask SubmitAsync()
@@ -184,8 +190,6 @@ public class SignUpUI : MonoBehaviour
         _passwordInput.text = string.Empty;
         _passwordConfirmInput.text = string.Empty;
         _logText.text = string.Empty;
-
-        SetSubmitting(false);
     }
 
     private void SetSubmitting(bool isSubmitting)
