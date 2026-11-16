@@ -304,10 +304,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5025081375068594241, guid: f6d559d372c21d84bbeee1af8be29a16, type: 3}
-      propertyPath: m_CharacterLimit
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 5101198435226623948, guid: f6d559d372c21d84bbeee1af8be29a16, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -407,10 +403,6 @@ PrefabInstance:
     - target: {fileID: 7147313033750097437, guid: f6d559d372c21d84bbeee1af8be29a16, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7484785279046842905, guid: f6d559d372c21d84bbeee1af8be29a16, type: 3}
-      propertyPath: m_CharacterLimit
-      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 8201620546540751339, guid: f6d559d372c21d84bbeee1af8be29a16, type: 3}
       propertyPath: m_AnchorMax.y
@@ -513,10 +505,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6782647825427893811}
     m_Modifications:
-    - target: {fileID: 1554082634064084928, guid: da1dc9ae8732aea429a517bc1d69b3c5, type: 3}
-      propertyPath: m_CharacterLimit
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 1883987759769569367, guid: da1dc9ae8732aea429a517bc1d69b3c5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -601,17 +589,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: SignUpUI
       objectReference: {fileID: 0}
-    - target: {fileID: 4952767502957564508, guid: da1dc9ae8732aea429a517bc1d69b3c5, type: 3}
-      propertyPath: m_CharacterLimit
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8082212841214465213, guid: da1dc9ae8732aea429a517bc1d69b3c5, type: 3}
-      propertyPath: m_CharacterLimit
-      value: 200
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5463942283409977661, guid: da1dc9ae8732aea429a517bc1d69b3c5, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da1dc9ae8732aea429a517bc1d69b3c5, type: 3}
