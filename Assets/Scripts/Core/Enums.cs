@@ -25,3 +25,25 @@ public enum DBSignUpResult
     AccountAlreadyExists,
     Timeout
 }
+
+public enum LoadingFailureChoice
+{
+    Retry,
+    GiveUp
+}
+
+public enum LoadingSequenceState
+{
+    NotStarted,
+    Running,
+    Completed,
+    Failed
+}
+
+public enum LoadFailureAction
+{
+    Retry,
+    ReturnToPrevious,
+    GoToLogin,
+    Quit
+}

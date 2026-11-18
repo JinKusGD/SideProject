@@ -115,7 +115,7 @@ public class SignUpUI : AccountFormUI
         }
         catch (Exception exception)
         {
-            DebugUtility.LogError(exception.ToString());
+            DebugUtility.LogWarning(exception.ToString());
             return;
         }
 

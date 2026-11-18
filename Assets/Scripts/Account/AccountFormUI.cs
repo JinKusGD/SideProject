@@ -8,7 +8,6 @@ public abstract class AccountFormUI : UIBase
     protected const string ConnectionErrorMessage = "Could not connect to the server.";
     protected const string TimeoutMessage = "The request timed out. Please try again.";
 
-    // 표시할 메시지가 없을 때 LogText에 보여 줄 문구
     private const string IdleMessage = "...";
 
     private static readonly Color ErrorColor = new Color32(0xDC, 0x26, 0x26, 0xFF);

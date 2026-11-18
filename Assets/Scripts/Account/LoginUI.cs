@@ -14,8 +14,6 @@ public class LoginUI : AccountFormUI
 
     private const string SignUpCompletedMessage = "Account created. Please log in.";
 
-    private const string GameSceneName = "Game";
-
     [SerializeField] private TMP_InputField _idInput;
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private Button _loginButton;
@@ -152,7 +150,7 @@ public class LoginUI : AccountFormUI
     {
         if (dbLoginResult == DBLoginResult.Success)
         {
-            SceneLoader.Load(GameSceneName);
+            SceneTransition.Start(new GameEntryLoadPlan());
             return;
         }
 
