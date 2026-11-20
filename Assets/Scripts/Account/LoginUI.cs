@@ -93,8 +93,11 @@ public class LoginUI : AccountFormUI
             return;
         }
 
-        string id = _idInput.text;
-        string password = _passwordInput.text;
+        //string id = _idInput.text;
+        //string password = _passwordInput.text;
+
+        string id = TestAccount.ID;
+        string password = TestAccount.PASSWORD;
 
         if (!ValidateInput(id, password))
         {
@@ -118,6 +121,8 @@ public class LoginUI : AccountFormUI
         catch (Exception exception)
         {
             DebugUtility.LogError(exception.ToString());
+            SetSubmitting(false);
+            ShowError(UnknownErrorMessage);
             return;
         }
 
