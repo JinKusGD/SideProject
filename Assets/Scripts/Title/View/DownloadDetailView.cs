@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System.Threading;
 using TMPro;
 using UnityEngine;
@@ -17,16 +18,20 @@ public class DownloadDetailView : UIBase
     private const float BytesPerMegabyte = 1024f * 1024f;
     private const float SpeedSampleSeconds = 0.5f;
     private const float HoldSeconds = 0.3f;
+    private const float FadeSeconds = 0.2f;
 
     [SerializeField] private Slider _progressSlider;
     [SerializeField] private TMP_Text _percentText;
     [SerializeField] private TMP_Text _sizeText;
     [SerializeField] private TMP_Text _speedText;
+    [SerializeField] private CanvasGroup _canvasGroup;
 
     private bool _isRunning;
     private bool _isFinishing;
-    private float _holdElapsed;
     private DownloadStatus _lastDownloadStatus;
+
+    private Sequence _finishSequence;
+    private Tween _fadeTween;
 
     private float _displayedProgress;
     private float _fillVelocity;
@@ -48,6 +53,7 @@ public class DownloadDetailView : UIBase
         hasAllReferences &= UnityUtility.CheckReference(_percentText, nameof(_percentText), this);
         hasAllReferences &= UnityUtility.CheckReference(_sizeText, nameof(_sizeText), this);
         hasAllReferences &= UnityUtility.CheckReference(_speedText, nameof(_speedText), this);
+        hasAllReferences &= UnityUtility.CheckReference(_canvasGroup, nameof(_canvasGroup), this);
 
         return hasAllReferences;
     }
@@ -60,6 +66,13 @@ public class DownloadDetailView : UIBase
         }
 
         RunAsync(status, cancellationToken).Forget();
+    }
+
+    public override void Hide()
+    {
+        KillTweens();
+        _isFinishing = false;
+        base.Hide();
     }
 
     private async UniTask RunAsync(ILoadingStatus status, CancellationToken cancellationToken)
@@ -119,8 +132,18 @@ public class DownloadDetailView : UIBase
 
     private void Begin(DownloadStatus downloadStatus)
     {
-        Show();
+        bool wasHidden = IsHidden;
+
+        KillTweens();
         _isFinishing = false;
+        Show();
+
+        if (wasHidden)
+        {
+            _canvasGroup.alpha = 0f;
+        }
+
+        _fadeTween = _canvasGroup.DOFade(1f, FadeSeconds).SetUpdate(true).SetLink(gameObject);
 
         _displayedProgress = 0f;
         _fillVelocity = 0f;
@@ -131,30 +154,47 @@ public class DownloadDetailView : UIBase
 
     private void Finish()
     {
-        if (!_isFinishing)
-        {
-            _isFinishing = true;
-            _holdElapsed = 0f;
-            UpdateSizeText(_lastDownloadStatus.TotalBytes, _lastDownloadStatus.TotalBytes);
-        }
-
-        AdvanceDisplayedProgress(1f);
-        UpdateProgressBar(_displayedProgress);
-
-        if (_displayedProgress < 1f)
+        if (_isFinishing)
         {
             return;
         }
 
-        _holdElapsed += Time.unscaledDeltaTime;
+        _isFinishing = true;
+        UpdateSizeText(_lastDownloadStatus.TotalBytes, _lastDownloadStatus.TotalBytes);
 
-        if (_holdElapsed < HoldSeconds)
-        {
-            return;
-        }
+        float fillSeconds = (1f - _displayedProgress) / MaxFillSpeed;
 
-        _isFinishing = false;
+        _finishSequence = DOTween.Sequence().SetUpdate(true).SetLink(gameObject);
+        _finishSequence.Append(DOTween.To(GetDisplayedProgress, SetDisplayedProgress, 1f, fillSeconds).SetEase(Ease.OutQuad));
+        _finishSequence.AppendInterval(HoldSeconds);
+        _finishSequence.Append(_canvasGroup.DOFade(0f, FadeSeconds));
+        _finishSequence.AppendCallback(OnFinishCompleted);
+    }
+
+    private float GetDisplayedProgress()
+    {
+        return _displayedProgress;
+    }
+
+    private void SetDisplayedProgress(float progress)
+    {
+        _displayedProgress = progress;
+        UpdateProgressBar(progress);
+    }
+
+    private void OnFinishCompleted()
+    {
+        _finishSequence = null;
         Hide();
+    }
+
+    private void KillTweens()
+    {
+        _finishSequence?.Kill();
+        _finishSequence = null;
+
+        _fadeTween?.Kill();
+        _fadeTween = null;
     }
 
     private void AdvanceDisplayedProgress(float actualProgress)

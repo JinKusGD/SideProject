@@ -1803,6 +1803,7 @@ GameObject:
   - component: {fileID: 2831948515766649990}
   - component: {fileID: 5686478559795067140}
   - component: {fileID: 6143134501626488968}
+  - component: {fileID: 3633808805906646149}
   m_Layer: 5
   m_Name: DownloadDetail
   m_TagString: Untagged
@@ -1894,6 +1895,19 @@ MonoBehaviour:
   _percentText: {fileID: 4639826339927913882}
   _sizeText: {fileID: 1140333153374823896}
   _speedText: {fileID: 9072183996797685615}
+  _canvasGroup: {fileID: 3633808805906646149}
+--- !u!225 &3633808805906646149
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6770552104375119770}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &7018326572272880832
 GameObject:
   m_ObjectHideFlags: 0
