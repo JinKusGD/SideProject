@@ -19,7 +19,7 @@ public static class LocalizationExporter
     private const string DefaultSettingsPath = "Assets/Ignore/LocalizationExportSettings.asset";
 
     private const string ResourcesRoot = "Assets/Resources/";
-    private const string MainAssetFolder = "Assets/Localization/";
+    private const string MainAssetFolder = "Assets/Localization/Main/";
 
     private const string AddressableGroupName = "Localization";
     private const string KeysFilePath = "Assets/Scripts/Localization/LocalizationKeys.cs";
