@@ -28,7 +28,7 @@ public class SignUpView : AccountFormView, ISignUpView
         hasAllReferences &= UnityUtility.CheckReference(_backButton, nameof(_backButton), this);
         hasAllReferences &= UnityUtility.CheckReference(_logText, nameof(_logText), this);
 
-        _presenter = new SignUpPresenter(this);
+        _presenter = new SignUpPresenter(this, AccountManager.Instance);
 
         enabled = hasAllReferences;
     }

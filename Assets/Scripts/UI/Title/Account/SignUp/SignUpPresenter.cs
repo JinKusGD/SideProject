@@ -5,12 +5,14 @@ using System.Threading;
 public sealed class SignUpPresenter
 {
     private readonly ISignUpView _view;
+    private readonly IAccountService _accountService;
 
     private bool _isSubmitting;
 
-    public SignUpPresenter(ISignUpView view)
+     public SignUpPresenter(ISignUpView view, IAccountService accountService)
     {
         _view = view;
+        _accountService = accountService;
     }
 
     public async UniTask SubmitAsync(string id, string password, string passwordConfirm, CancellationToken cancellationToken)
@@ -32,7 +34,7 @@ public sealed class SignUpPresenter
 
         try
         {
-            dbSignUpResult = await AccountManager.Instance.SignUpAsync(id, password, cancellationToken);
+            dbSignUpResult = await _accountService.SignUpAsync(id, password, cancellationToken);
         }
         catch (OperationCanceledException)
         {

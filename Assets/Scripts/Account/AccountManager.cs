@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System.Threading;
 
-public sealed class AccountManager
+public sealed class AccountManager : IAccountService
 {
     public static AccountManager Instance { get; } = new AccountManager();
 
