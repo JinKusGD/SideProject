@@ -27,6 +27,19 @@ public sealed class LoadingSequence : ILoadingStatus
         }
     }
 
+    public string CurrentStepMessageKey
+    {
+        get
+        {
+            if (_currentRunner == null)
+            {
+                return string.Empty;
+            }
+
+            return _currentRunner.Step.MessageKey;
+        }
+    }
+
     public bool IsRunning => _loadingSequenceState == LoadingSequenceState.Running;
 
     public bool TryGetCurrentDownload(out DownloadStatus status)

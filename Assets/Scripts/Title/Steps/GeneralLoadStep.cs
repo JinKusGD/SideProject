@@ -8,11 +8,11 @@ public sealed class GeneralLoadStep : ILoadStep
 
     private readonly Func<CancellationToken, UniTask> _work;
 
-    public GeneralLoadStep(string name, Func<CancellationToken, UniTask> work) : this(name, work, TimeSpan.FromSeconds(DefaultTimeoutSeconds))
+    public GeneralLoadStep(string name, string messageKey, Func<CancellationToken, UniTask> work) : this(name, messageKey, work, TimeSpan.FromSeconds(DefaultTimeoutSeconds))
     {
     }
 
-    public GeneralLoadStep(string name, Func<CancellationToken, UniTask> work, TimeSpan timeout)
+    public GeneralLoadStep(string name, string messageKey, Func<CancellationToken, UniTask> work, TimeSpan timeout)
     {
         if (work == null)
         {
@@ -20,11 +20,14 @@ public sealed class GeneralLoadStep : ILoadStep
         }
 
         Name = name;
+        MessageKey = messageKey;
         Timeout = timeout;
         _work = work;
     }
 
     public string Name { get; }
+
+    public string MessageKey { get; }
 
     public TimeSpan Timeout { get; }
 

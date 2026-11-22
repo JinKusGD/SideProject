@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DownloadDetailView : UIBase
+public class DownloadDetailUI : UIBase
 {
     private const float MinimumFillSeconds = 1f;
     private const float MaxFillSpeed = 1f / MinimumFillSeconds;

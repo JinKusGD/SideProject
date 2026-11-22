@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 1380009976684279650}
   - component: {fileID: 428155003736440776}
   - component: {fileID: 4555949045474489062}
+  - component: {fileID: 1729962630470576509}
   m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
@@ -316,6 +317,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1729962630470576509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298107744986413966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_ACCOUNT_ID_PLACEHOLDER
 --- !u!1 &557699086846692347
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,6 +342,7 @@ GameObject:
   - component: {fileID: 6263049603740129819}
   - component: {fileID: 1031771974629966696}
   - component: {fileID: 8807864961744449720}
+  - component: {fileID: 8461669083295088323}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -474,6 +489,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &8461669083295088323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557699086846692347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_LOGIN_TITLE
 --- !u!1 &1794249631893594099
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,6 +830,7 @@ GameObject:
   - component: {fileID: 5895761945099818141}
   - component: {fileID: 2261450024226307215}
   - component: {fileID: 5544996591830617402}
+  - component: {fileID: 4157371612777943245}
   m_Layer: 5
   m_Name: Subtitle
   m_TagString: Untagged
@@ -948,6 +977,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &4157371612777943245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3710618137002781612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_LOGIN_SUBTITLE
 --- !u!1 &3809032333794879541
 GameObject:
   m_ObjectHideFlags: 0
@@ -2319,6 +2361,7 @@ GameObject:
   - component: {fileID: 1668933071378735513}
   - component: {fileID: 1112382493046106536}
   - component: {fileID: 466615247001684967}
+  - component: {fileID: 682937075748721724}
   m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
@@ -2465,6 +2508,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &682937075748721724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7530828316397352722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_ACCOUNT_PASSWORD_PLACEHOLDER
 --- !u!1 &8027687397049708437
 GameObject:
   m_ObjectHideFlags: 0
@@ -2476,6 +2532,7 @@ GameObject:
   - component: {fileID: 8429530232544367201}
   - component: {fileID: 1290245739989971332}
   - component: {fileID: 3776967775633197784}
+  - component: {fileID: 3907356448154404531}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -2602,6 +2659,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3907356448154404531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027687397049708437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_LOGIN_SIGN_UP_LINK
 --- !u!1 &8156270375916400304
 GameObject:
   m_ObjectHideFlags: 0
@@ -2613,6 +2683,7 @@ GameObject:
   - component: {fileID: 4506438825457160690}
   - component: {fileID: 2847508631984268333}
   - component: {fileID: 8543956241768209742}
+  - component: {fileID: 7171694701452823193}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -2739,6 +2810,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7171694701452823193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8156270375916400304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_LOGIN_BUTTON
 --- !u!1 &8465648014519131826
 GameObject:
   m_ObjectHideFlags: 0

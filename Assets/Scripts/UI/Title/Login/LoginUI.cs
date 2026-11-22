@@ -7,13 +7,6 @@ using UnityEngine.UI;
 
 public class LoginUI : AccountFormUI
 {
-    private const string LoggingInMessage = "Logging in...";
-
-    private const string LoginFailedMessage = "Incorrect ID or password.";
-    private const string UnknownErrorMessage = "Login failed. Please try again later.";
-
-    private const string SignUpCompletedMessage = "Account created. Please log in.";
-
     [SerializeField] private TMP_InputField _idInput;
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private Button _loginButton;
@@ -61,7 +54,7 @@ public class LoginUI : AccountFormUI
     public void ShowSignUpCompleted(string id)
     {
         _idInput.text = id;
-        ShowSuccess(SignUpCompletedMessage);
+        ShowSuccess(LocalizationKeys.UiLoginSignUpCompleted);
         FocusInputField(_passwordInput);
     }
 
@@ -105,7 +98,7 @@ public class LoginUI : AccountFormUI
         }
 
         SetSubmitting(true);
-        ShowInfo(LoggingInMessage);
+        ShowInfo(LocalizationKeys.UiLoginInProgress);
 
         CancellationToken cancellationToken = destroyCancellationToken;
         DBLoginResult dbLoginResult;
@@ -122,7 +115,7 @@ public class LoginUI : AccountFormUI
         {
             DebugUtility.LogError(exception.ToString());
             SetSubmitting(false);
-            ShowError(UnknownErrorMessage);
+            ShowError(LocalizationKeys.UiLoginUnknownError);
             return;
         }
 
@@ -138,13 +131,13 @@ public class LoginUI : AccountFormUI
     {
         if (string.IsNullOrWhiteSpace(id))
         {
-            ShowErrorAndFocus(_idInput, EmptyIdMessage);
+            ShowErrorAndFocus(_idInput, LocalizationKeys.UiAccountEmptyId);
             return false;
         }
 
         if (string.IsNullOrWhiteSpace(password))
         {
-            ShowErrorAndFocus(_passwordInput, EmptyPasswordMessage);
+            ShowErrorAndFocus(_passwordInput, LocalizationKeys.UiAccountEmptyPassword);
             return false;
         }
 
@@ -165,16 +158,16 @@ public class LoginUI : AccountFormUI
         {
             case DBLoginResult.AccountNotFound:
                 _passwordInput.text = string.Empty;
-                ShowErrorAndFocus(_passwordInput, LoginFailedMessage);
+                ShowErrorAndFocus(_passwordInput, LocalizationKeys.UiLoginFailed);
                 break;
             case DBLoginResult.ServerUnavailable:
-                ShowError(ConnectionErrorMessage);
+                ShowError(LocalizationKeys.UiAccountConnectionError);
                 break;
             case DBLoginResult.Timeout:
-                ShowError(TimeoutMessage);
+                ShowError(LocalizationKeys.UiAccountTimeout);
                 break;
             default:
-                ShowError(UnknownErrorMessage);
+                ShowError(LocalizationKeys.UiLoginUnknownError);
                 break;
         }
     }

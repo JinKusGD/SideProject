@@ -6,10 +6,6 @@ using UnityEngine.UI;
 
 public class LoadingFailurePopup : UIBase
 {
-    private const string ErrorCodeFormat = "Error: {0} ({1})";
-    private const string ReturnButtonLabel = "Return";
-    private const string ConfirmButtonLabel = "OK";
-
     [SerializeField] private TMP_Text _messageText;
     [SerializeField] private TMP_Text _errorCodeText;
     [SerializeField] private Button _retryButton;
@@ -48,10 +44,18 @@ public class LoadingFailurePopup : UIBase
         _choiceSource?.TrySetCanceled();
         _choiceSource = new UniTaskCompletionSource<LoadingFailureChoice>();
 
-        _messageText.text = LoadFailureMessages.GetMessage(failure);
-        _errorCodeText.text = string.Format(ErrorCodeFormat, failure.ErrorCode, failure.StepName);
+        string messageKey = LoadFailureMessages.GetMessageKey(failure);
+        string messageString = LocalizationManager.Get(messageKey);
+        _messageText.text = messageString;
+
+        string errorCodeString = LocalizationManager.Get(LocalizationKeys.UiLoadFailErrorCode, failure.ErrorCode, failure.StepName);
+        _errorCodeText.text = errorCodeString;
+
         _retryButton.gameObject.SetActive(failure.IsRetryable);
-        _returnButtonText.text = failure.IsRetryable ? ReturnButtonLabel : ConfirmButtonLabel;
+
+        string returnButtonKey = failure.IsRetryable ? LocalizationKeys.UiButtonReturn : LocalizationKeys.UiButtonConfirm;
+        string returnButtonString = LocalizationManager.Get(returnButtonKey);
+        _returnButtonText.text = returnButtonString;
 
         Show();
 

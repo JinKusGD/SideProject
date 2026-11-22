@@ -3,11 +3,6 @@ using UnityEngine;
 
 public abstract class AccountFormUI : UIBase
 {
-    protected const string EmptyIdMessage = "Please enter your ID.";
-    protected const string EmptyPasswordMessage = "Please enter your password.";
-    protected const string ConnectionErrorMessage = "Could not connect to the server.";
-    protected const string TimeoutMessage = "The request timed out. Please try again.";
-
     private const string IdleMessage = "...";
 
     private static readonly Color ErrorColor = new Color32(0xDC, 0x26, 0x26, 0xFF);
@@ -24,19 +19,22 @@ public abstract class AccountFormUI : UIBase
         SetButtonsInteractable(!isSubmitting);
     }
 
-    protected void ShowError(string message)
+    protected void ShowError(string key)
     {
-        SetMessage(message, ErrorColor);
+        string errorString = LocalizationManager.Get(key);
+        SetMessage(errorString, ErrorColor);
     }
 
-    protected void ShowInfo(string message)
+    protected void ShowInfo(string key)
     {
-        SetMessage(message, InfoColor);
+        string infoString = LocalizationManager.Get(key);
+        SetMessage(infoString, InfoColor);
     }
 
-    protected void ShowSuccess(string message)
+    protected void ShowSuccess(string key)
     {
-        SetMessage(message, SuccessColor);
+        string showString = LocalizationManager.Get(key);
+        SetMessage(showString, SuccessColor);
     }
 
     protected void ClearMessage()
@@ -44,9 +42,9 @@ public abstract class AccountFormUI : UIBase
         SetMessage(IdleMessage, InfoColor);
     }
 
-    protected void ShowErrorAndFocus(TMP_InputField inputField, string message)
+    protected void ShowErrorAndFocus(TMP_InputField inputField, string key)
     {
-        ShowError(message);
+        ShowError(key);
         FocusInputField(inputField);
     }
 

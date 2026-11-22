@@ -9,6 +9,8 @@ public interface ILoadStep
 {
     string Name { get; }
 
+    string MessageKey { get; }
+
     TimeSpan Timeout { get; }
 
     UniTask ExecuteAsync(CancellationToken cancellationToken);

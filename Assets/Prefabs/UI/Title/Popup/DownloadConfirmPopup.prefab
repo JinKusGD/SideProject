@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 612040328000255913}
   - component: {fileID: 1473252167248380245}
   - component: {fileID: 2761921020785409428}
+  - component: {fileID: 1494630305158299733}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -137,6 +138,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1494630305158299733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582032620382919048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_BUTTON_DOWNLOAD
 --- !u!1 &1691952946802088166
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,6 +679,7 @@ GameObject:
   - component: {fileID: 4279360641499672853}
   - component: {fileID: 8877060173072964111}
   - component: {fileID: 8661595354401818015}
+  - component: {fileID: 3227203212557183687}
   m_Layer: 5
   m_Name: MessageText
   m_TagString: Untagged
@@ -791,6 +806,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3227203212557183687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089169196369998113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_DOWNLOAD_CONFIRM_DESC
 --- !u!1 &2769867251712336476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,6 +1072,7 @@ GameObject:
   - component: {fileID: 1720174340952031386}
   - component: {fileID: 6586667888140645173}
   - component: {fileID: 279552291706888034}
+  - component: {fileID: 7007461921456233281}
   m_Layer: 5
   m_Name: TitleText
   m_TagString: Untagged
@@ -1170,6 +1199,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7007461921456233281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4901024837678796405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_DOWNLOAD_CONFIRM_TITLE
 --- !u!1 &6475862466328149458
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,6 +1523,7 @@ GameObject:
   - component: {fileID: 7070031478476062681}
   - component: {fileID: 2478232823753466598}
   - component: {fileID: 8536860100944623593}
+  - component: {fileID: 3733820665970758836}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -1607,6 +1650,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3733820665970758836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057106126118951045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_BUTTON_CANCEL
 --- !u!1 &8578309846219409860
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,6 +1674,7 @@ GameObject:
   - component: {fileID: 8762257006741254716}
   - component: {fileID: 2908978319412646520}
   - component: {fileID: 5520230122770246449}
+  - component: {fileID: 5615302193485766783}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -1744,6 +1801,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5615302193485766783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8578309846219409860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_DOWNLOAD_CONFIRM_TAG
 --- !u!1 &8744836963394724665
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,34 +2,29 @@ using System.Collections.Generic;
 
 public static class LoadFailureMessages
 {
-    private const string RetryMessage = "Loading failed.\nPlease check your connection and try again.";
-    private const string ReturnToPreviousMessage = "Unable to continue loading.\nPlease try again later.";
-    private const string GoToTitleMessage = "Your session has expired.\nPlease log in again.";
-    private const string QuitMessage = "A problem occurred.\nThe game will now close.";
-
-    private static readonly Dictionary<string, string> MessagesByErrorCode = new Dictionary<string, string>
+    private static readonly Dictionary<string, string> MessageKeysByErrorCode = new Dictionary<string, string>
     {
-        { LoadErrorCodes.Timeout, "The server is not responding.\nPlease try again." },
-        { LoadErrorCodes.DownloadDeclined, "Additional resources are required to play.\nThe game will now close." },
+        { LoadErrorCodes.Timeout, LocalizationKeys.UiLoadFailTimeout },
+        { LoadErrorCodes.DownloadDeclined, LocalizationKeys.UiLoadFailDownloadDeclined },
     };
 
-    public static string GetMessage(LoadFailure failure)
+    public static string GetMessageKey(LoadFailure failure)
     {
-        if (failure.ErrorCode != null && MessagesByErrorCode.TryGetValue(failure.ErrorCode, out string message))
+        if (failure.ErrorCode != null && MessageKeysByErrorCode.TryGetValue(failure.ErrorCode, out string key))
         {
-            return message;
+            return key;
         }
 
         switch (failure.Action)
         {
             case LoadFailureAction.Retry:
-                return RetryMessage;
+                return LocalizationKeys.UiLoadFailRetry;
             case LoadFailureAction.GoToTitle:
-                return GoToTitleMessage;
+                return LocalizationKeys.UiLoadFailGoToTitle;
             case LoadFailureAction.Quit:
-                return QuitMessage;
+                return LocalizationKeys.UiLoadFailQuit;
             default:
-                return ReturnToPreviousMessage;
+                return LocalizationKeys.UiLoadFailReturnToPrevious;
         }
     }
 }

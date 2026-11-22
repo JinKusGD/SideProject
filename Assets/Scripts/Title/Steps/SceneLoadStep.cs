@@ -20,6 +20,8 @@ public sealed class SceneLoadStep : ILoadStep
 
     public string Name { get; } = SceneStepName;
 
+    public string MessageKey { get; } = LocalizationKeys.UiLoadingStepScene;
+
     public TimeSpan Timeout { get; } = TimeSpan.Zero;
 
     public async UniTask ExecuteAsync(CancellationToken cancellationToken)

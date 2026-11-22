@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 64939274278956487}
   - component: {fileID: 1415478632676554398}
   - component: {fileID: 3074798925235847571}
+  - component: {fileID: 2893654502919355379}
   m_Layer: 5
   m_Name: StatusMessageText
   m_TagString: Untagged
@@ -370,6 +371,19 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &2893654502919355379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505081017944633169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_LOADING_STEP_UPDATE_INFO
 --- !u!1 &1803549956972957759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,7 +1190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoginToGameLoadingController
   _statusIndicator: {fileID: 1634164378675058102}
-  _statusMessageText: {fileID: 1415478632676554398}
+  _statusMessageText: {fileID: 2893654502919355379}
   _downloadDetailView: {fileID: 6143134501626488968}
   _loginPopup: {fileID: 5968115067033880596}
   _failurePopup: {fileID: 4332487438126727731}

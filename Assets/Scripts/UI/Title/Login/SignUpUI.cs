@@ -7,14 +7,6 @@ using UnityEngine.UI;
 
 public class SignUpUI : AccountFormUI
 {
-    private const string EmptyPasswordConfirmMessage = "Please confirm your password.";
-    private const string PasswordMismatchMessage = "Passwords do not match.";
-
-    private const string SigningUpMessage = "Creating account...";
-
-    private const string DuplicateIdMessage = "This ID is already in use.";
-    private const string UnknownErrorMessage = "Sign up failed. Please try again later.";
-
     [SerializeField] private TMP_InputField _idInput;
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private TMP_InputField _passwordConfirmInput;
@@ -100,7 +92,7 @@ public class SignUpUI : AccountFormUI
         }
 
         SetSubmitting(true);
-        ShowInfo(SigningUpMessage);
+        ShowInfo(LocalizationKeys.UiSignUpInProgress);
 
         CancellationToken cancellationToken = destroyCancellationToken;
         DBSignUpResult dbSignUpResult;
@@ -117,7 +109,7 @@ public class SignUpUI : AccountFormUI
         {
             DebugUtility.LogError(exception.ToString());
             SetSubmitting(false);
-            ShowError(UnknownErrorMessage);
+            ShowError(LocalizationKeys.UiSignUpUnknownError);
             return;
         }
 
@@ -133,19 +125,19 @@ public class SignUpUI : AccountFormUI
     {
         if (string.IsNullOrWhiteSpace(id))
         {
-            ShowErrorAndFocus(_idInput, EmptyIdMessage);
+            ShowErrorAndFocus(_idInput, LocalizationKeys.UiAccountEmptyId);
             return false;
         }
 
         if (string.IsNullOrWhiteSpace(password))
         {
-            ShowErrorAndFocus(_passwordInput, EmptyPasswordMessage);
+            ShowErrorAndFocus(_passwordInput, LocalizationKeys.UiAccountEmptyPassword);
             return false;
         }
 
         if (string.IsNullOrWhiteSpace(passwordConfirm))
         {
-            ShowErrorAndFocus(_passwordConfirmInput, EmptyPasswordConfirmMessage);
+            ShowErrorAndFocus(_passwordConfirmInput, LocalizationKeys.UiSignUpEmptyPasswordConfirm);
             return false;
         }
 
@@ -153,7 +145,7 @@ public class SignUpUI : AccountFormUI
 
         if (!isPasswordMatched)
         {
-            ShowErrorAndFocus(_passwordConfirmInput, PasswordMismatchMessage);
+            ShowErrorAndFocus(_passwordConfirmInput, LocalizationKeys.UiSignUpPasswordMismatch);
             return false;
         }
 
@@ -170,16 +162,16 @@ public class SignUpUI : AccountFormUI
                 SignUpCompleted?.Invoke(id);
                 break;
             case DBSignUpResult.AccountAlreadyExists:
-                ShowErrorAndFocus(_idInput, DuplicateIdMessage);
+                ShowErrorAndFocus(_idInput, LocalizationKeys.UiSignUpDuplicateId);
                 break;
             case DBSignUpResult.ServerUnavailable:
-                ShowError(ConnectionErrorMessage);
+                ShowError(LocalizationKeys.UiAccountConnectionError);
                 break;
             case DBSignUpResult.Timeout:
-                ShowError(TimeoutMessage);
+                ShowError(LocalizationKeys.UiAccountTimeout);
                 break;
             default:
-                ShowError(UnknownErrorMessage);
+                ShowError(LocalizationKeys.UiSignUpUnknownError);
                 break;
         }
     }

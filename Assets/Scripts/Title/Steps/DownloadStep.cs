@@ -12,14 +12,17 @@ public sealed class DownloadStep : IDownloadStep
 
     private double _downloadedBytes;
 
-    public DownloadStep(string name, long totalBytes, float durationSeconds)
+    public DownloadStep(string name, string messageKey, long totalBytes, float durationSeconds)
     {
         Name = name;
+        MessageKey = messageKey;
         TotalBytes = totalBytes;
         _averageBytesPerSecond = totalBytes / Math.Max(durationSeconds, 0.01f);
     }
 
     public string Name { get; }
+
+    public string MessageKey { get; }
 
     public TimeSpan Timeout { get; } = TimeSpan.Zero;
 

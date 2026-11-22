@@ -1,23 +1,16 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
-using TMPro;
 using UnityEngine;
 
-public class TitleView : MonoBehaviour
+public class TitleUI : MonoBehaviour
 {
-    private const string StepMessageFormat = "Loading {0}...";
-    private const string RetryingMessageFormat = "Retrying... ({0}/{1})";
-    private const string FailureMessage = "Loading failed.";
-    private const string CompletedMessage = "Loading complete.";
-    private const string UpdateCheckedMessage = "Update check complete.";
-
     [Header("Status")]
     [SerializeField] private StatusIndicator _statusIndicator;
-    [SerializeField] private TMP_Text _statusMessageText;
+    [SerializeField] private LocalizedText _statusMessageText;
 
     [Header("Download")]
-    [SerializeField] private DownloadDetailView _downloadDetailView;
+    [SerializeField] private DownloadDetailUI _downloadDetailView;
 
     [Header("Popup")]
     [SerializeField] private LoginPopup _loginPopup;
@@ -26,7 +19,7 @@ public class TitleView : MonoBehaviour
 
     private LoadingSession _session;
 
-    private string _displayedStepName;
+    private string _displayedStepMessageKey;
 
     private void Awake()
     {
@@ -80,7 +73,7 @@ public class TitleView : MonoBehaviour
 
         if (status.IsRunning)
         {
-            UpdateStepMessage(status.CurrentStepName);
+            UpdateStepMessage(status.CurrentStepMessageKey);
         }
     }
 
@@ -210,43 +203,43 @@ public class TitleView : MonoBehaviour
         _downloadDetailView.Run(_session.Status, destroyCancellationToken);
     }
 
-    private void UpdateStepMessage(string stepName)
+    private void UpdateStepMessage(string messageKey)
     {
-        if (string.IsNullOrWhiteSpace(stepName) || string.Equals(stepName, _displayedStepName, StringComparison.Ordinal))
+        if (string.IsNullOrWhiteSpace(messageKey) || string.Equals(messageKey, _displayedStepMessageKey, StringComparison.Ordinal))
         {
             return;
         }
 
-        _displayedStepName = stepName;
-        _statusMessageText.text = string.Format(StepMessageFormat, stepName);
+        _displayedStepMessageKey = messageKey;
+        _statusMessageText.SetKey(messageKey);
         _statusIndicator.ShowLoading();
     }
 
     private void ShowRetryingMessage(int retryCount, int maxRetryCount)
     {
-        _displayedStepName = null;
-        _statusMessageText.SetText(RetryingMessageFormat, retryCount, maxRetryCount);
+        _displayedStepMessageKey = null;
+        _statusMessageText.SetKey(LocalizationKeys.UiLoadingRetrying, retryCount, maxRetryCount);
         _statusIndicator.ShowLoading();
     }
 
     private void ShowFailureMessage()
     {
-        _displayedStepName = null;
-        _statusMessageText.text = FailureMessage;
+        _displayedStepMessageKey = null;
+        _statusMessageText.SetKey(LocalizationKeys.UiLoadingFailed);
         _statusIndicator.ShowFailed();
     }
 
     private void ShowCompletedMessage()
     {
-        _displayedStepName = null;
-        _statusMessageText.text = CompletedMessage;
+        _displayedStepMessageKey = null;
+        _statusMessageText.SetKey(LocalizationKeys.UiLoadingCompleted);
         _statusIndicator.ShowCompleted();
     }
 
     private void ShowUpdateCheckedMessage()
     {
-        _displayedStepName = null;
-        _statusMessageText.text = UpdateCheckedMessage;
+        _displayedStepMessageKey = null;
+        _statusMessageText.SetKey(LocalizationKeys.UiLoadingUpdateChecked);
         _statusIndicator.ShowCompleted();
     }
 }

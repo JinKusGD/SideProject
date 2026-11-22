@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null)
         {
-            // 로딩 실패 후 Boot로 되돌아온 경우. 새로 생긴 쪽은 지우고 기존 매니저가 진입 흐름을 다시 시작한다.
             Destroy(gameObject);
             Instance.EnterTitle();
             return;
@@ -16,6 +15,8 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        LocalizationManager.Initialize();
     }
 
     private void Start()

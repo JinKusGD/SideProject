@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 2234400653565204234}
   - component: {fileID: 5962089561818205330}
   - component: {fileID: 4417234244619203648}
+  - component: {fileID: 603596141342282107}
   m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
@@ -300,6 +301,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &603596141342282107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082363265058519100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_ACCOUNT_PASSWORD_PLACEHOLDER
 --- !u!1 &2453447719779356090
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,6 +326,7 @@ GameObject:
   - component: {fileID: 4261405564593801739}
   - component: {fileID: 903180368027133875}
   - component: {fileID: 5824924418983980052}
+  - component: {fileID: 7393010349677098830}
   m_Layer: 5
   m_Name: Subtitle
   m_TagString: Untagged
@@ -458,6 +473,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &7393010349677098830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2453447719779356090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_SIGN_UP_SUBTITLE
 --- !u!1 &2631354342026290272
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,6 +498,7 @@ GameObject:
   - component: {fileID: 1690907402743542392}
   - component: {fileID: 983743601977209184}
   - component: {fileID: 2021527454393737938}
+  - component: {fileID: 8336022151289251500}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -616,6 +645,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &8336022151289251500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631354342026290272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_SIGN_UP_TITLE
 --- !u!1 &2651180713908984963
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,6 +751,7 @@ GameObject:
   - component: {fileID: 1652629239241863616}
   - component: {fileID: 1951387079377043962}
   - component: {fileID: 6449486563689997914}
+  - component: {fileID: 936672104525067040}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -835,6 +878,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &936672104525067040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3159795072586208867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_SIGN_UP_LOG_IN_LINK
 --- !u!1 &3393121155705864455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,6 +1102,7 @@ GameObject:
   - component: {fileID: 7725046571049466726}
   - component: {fileID: 2656802931599426531}
   - component: {fileID: 7839901086075220468}
+  - component: {fileID: 5137500006321352082}
   m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
@@ -1192,6 +1249,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &5137500006321352082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3431787173589921088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_SIGN_UP_PASSWORD_CONFIRM_PLACEHOLDER
 --- !u!1 &4160183252478130598
 GameObject:
   m_ObjectHideFlags: 0
@@ -2657,6 +2727,7 @@ GameObject:
   - component: {fileID: 1316149086799761776}
   - component: {fileID: 5614902407078159372}
   - component: {fileID: 8294295986907246915}
+  - component: {fileID: 5301511033006573802}
   m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
@@ -2803,6 +2874,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &5301511033006573802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8428478237190722978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_ACCOUNT_ID_PLACEHOLDER
 --- !u!1 &8871341299504425011
 GameObject:
   m_ObjectHideFlags: 0
@@ -2814,6 +2898,7 @@ GameObject:
   - component: {fileID: 6563292365737972838}
   - component: {fileID: 1295897052956305084}
   - component: {fileID: 213708968760844400}
+  - component: {fileID: 3821628296879940195}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -2940,6 +3025,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3821628296879940195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8871341299504425011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f562c59d0e8d1dc4ba11372ba95f681d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  _key: UI_SIGN_UP_BUTTON
 --- !u!1 &8976665773529765502
 GameObject:
   m_ObjectHideFlags: 0
