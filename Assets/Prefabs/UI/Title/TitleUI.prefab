@@ -650,10 +650,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4249508825377652237}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 316, y: -17}
+  m_SizeDelta: {x: 400, y: 34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3096476617242222289
 CanvasRenderer:
@@ -1146,7 +1146,7 @@ GameObject:
   - component: {fileID: 8051640006882343473}
   - component: {fileID: 7556510652447713581}
   m_Layer: 5
-  m_Name: TitleView
+  m_Name: TitleUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1325,10 +1325,10 @@ RectTransform:
   - {fileID: 3912932126846101433}
   m_Father: {fileID: 5118753344069060382}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 394, y: -21}
+  m_SizeDelta: {x: 732, y: 34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8488021278366171826
 MonoBehaviour:
@@ -1954,10 +1954,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5118753344069060382}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 394, y: -63.41}
+  m_SizeDelta: {x: 732, y: 26.82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8832923465692884489
 CanvasRenderer:
@@ -2093,10 +2093,10 @@ RectTransform:
   - {fileID: 658212849090288838}
   m_Father: {fileID: 4249508825377652237}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 52, y: -17}
+  m_SizeDelta: {x: 104, y: 34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &590870933069218619
 CanvasRenderer:
@@ -2274,7 +2274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5118753344069060382
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2295,7 +2295,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 96, y: 108}
-  m_SizeDelta: {x: 760, y: 0}
+  m_SizeDelta: {x: 760, y: 80.82}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &6690075739511289491
 MonoBehaviour:
@@ -3232,6 +3232,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoginPopup
       objectReference: {fileID: 0}
+    - target: {fileID: 5664378744342646719, guid: 9c98b0b3ccc004c468a50ebc41a3d44f, type: 3}
+      propertyPath: _loginView
+      value: 
+      objectReference: {fileID: 7641078147711516}
+    - target: {fileID: 5664378744342646719, guid: 9c98b0b3ccc004c468a50ebc41a3d44f, type: 3}
+      propertyPath: _signUpView
+      value: 
+      objectReference: {fileID: 7452686884131777208}
     - target: {fileID: 6782647825427893811, guid: 9c98b0b3ccc004c468a50ebc41a3d44f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3317,6 +3325,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c98b0b3ccc004c468a50ebc41a3d44f, type: 3}
+--- !u!114 &7641078147711516 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2041202627661071799, guid: 9c98b0b3ccc004c468a50ebc41a3d44f, type: 3}
+  m_PrefabInstance: {fileID: 2038137751423354795}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 445ed8e330a85e14a80490f8f886dcfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoginUI
 --- !u!224 &4785115553839942040 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6782647825427893811, guid: 9c98b0b3ccc004c468a50ebc41a3d44f, type: 3}
@@ -3333,6 +3352,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a8e29aa4c983d246b3d85e8d5443a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AccountUIController
+--- !u!114 &7452686884131777208 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8873683636487204115, guid: 9c98b0b3ccc004c468a50ebc41a3d44f, type: 3}
+  m_PrefabInstance: {fileID: 2038137751423354795}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1059f57f5a83bfa41b18f3a5648c8932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SignUpUI
 --- !u!1001 &2676999534214492130
 PrefabInstance:
   m_ObjectHideFlags: 0

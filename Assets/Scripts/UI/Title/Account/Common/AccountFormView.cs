@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public abstract class AccountFormUI : UIBase
+public abstract class AccountFormView : UIBase, IAccountFormView
 {
     private const string IdleMessage = "...";
 
@@ -11,30 +11,33 @@ public abstract class AccountFormUI : UIBase
 
     [SerializeField] protected TMP_Text _logText;
 
-    protected bool IsSubmitting { get; private set; }
-
-    protected void SetSubmitting(bool isSubmitting)
+    public void SetSubmitting(bool isSubmitting)
     {
-        IsSubmitting = isSubmitting;
         SetButtonsInteractable(!isSubmitting);
     }
 
-    protected void ShowError(string key)
+    public void ShowError(string key)
     {
         string errorString = LocalizationManager.Get(key);
         SetMessage(errorString, ErrorColor);
     }
 
-    protected void ShowInfo(string key)
+    public void ShowInfo(string key)
     {
         string infoString = LocalizationManager.Get(key);
         SetMessage(infoString, InfoColor);
     }
 
-    protected void ShowSuccess(string key)
+    public void ShowSuccess(string key)
     {
         string showString = LocalizationManager.Get(key);
         SetMessage(showString, SuccessColor);
+    }
+
+    public void ShowErrorAndFocus(AccountInputField inputField, string key)
+    {
+        ShowError(key);
+        FocusInputField(inputField);
     }
 
     protected void ClearMessage()
@@ -42,17 +45,14 @@ public abstract class AccountFormUI : UIBase
         SetMessage(IdleMessage, InfoColor);
     }
 
-    protected void ShowErrorAndFocus(TMP_InputField inputField, string key)
+    protected void FocusInputField(AccountInputField inputField)
     {
-        ShowError(key);
-        FocusInputField(inputField);
+        TMP_InputField targetInput = GetInputField(inputField);
+        targetInput.Select();
+        targetInput.ActivateInputField();
     }
 
-    protected void FocusInputField(TMP_InputField inputField)
-    {
-        inputField.Select();
-        inputField.ActivateInputField();
-    }
+    protected abstract TMP_InputField GetInputField(AccountInputField inputField);
 
     protected abstract void SetButtonsInteractable(bool isInteractable);
 
