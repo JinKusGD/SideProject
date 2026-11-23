@@ -44,3 +44,7 @@ $RECYCLE.BIN/
 
 Assets/Ignore
 Assets/Ignore.meta
+
+### [ Addressables ] ###
+# 원격 콘텐츠 빌드 결과물
+/[Ss]erver[Dd]ata/
