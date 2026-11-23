@@ -59,7 +59,7 @@ public sealed class AddressablesCatalogStep : ILoadStep
 
     private static async UniTask UpdateCatalogsAsync(List<string> catalogIds, CancellationToken cancellationToken)
     {
-        AsyncOperationHandle<List<IResourceLocator>> handle = Addressables.UpdateCatalogs(catalogIds, false);
+        AsyncOperationHandle<List<IResourceLocator>> handle = Addressables.UpdateCatalogs(true, catalogIds, false);
 
         try
         {
