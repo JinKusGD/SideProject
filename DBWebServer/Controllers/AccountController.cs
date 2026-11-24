@@ -13,7 +13,7 @@ public class AccountController : ControllerBase
 
     public AccountController(IConfiguration config, ILogger<AccountController> logger)
     {
-        connectionString = config.GetConnectionString("Server");
+        connectionString = config.GetConnectionString("Server") ?? throw new InvalidOperationException("ConnectionStrings:Server is missing.");
         this.logger = logger;
     }
 
@@ -151,8 +151,8 @@ public enum DBConnectionResult
 
 public class AccountRequest
 {
-    public string Id { get; set; }
-    public string Password { get; set; }
+    public string Id { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 }
 
 public class LoginResponse
