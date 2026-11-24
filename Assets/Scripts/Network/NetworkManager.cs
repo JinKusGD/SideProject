@@ -9,12 +9,12 @@ public sealed class NetworkManager
 
     private NetworkManager() { }
 
-    public UniTask<DBLoginPacket> RequestLoginAsync(string id, string password, CancellationToken cancellationToken)
+    public UniTask<LoginPacket> RequestLoginAsync(string id, string password, CancellationToken cancellationToken)
     {
         return _accountApiClient.LoginAsync(id, password, cancellationToken);
     }
 
-    public UniTask<DBSignUpResult> RequestSignUpAsync(string id, string password, CancellationToken cancellationToken)
+    public UniTask<SignUpResult> RequestSignUpAsync(string id, string password, CancellationToken cancellationToken)
     {
         return _accountApiClient.SignUpAsync(id, password, cancellationToken);
     }

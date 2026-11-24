@@ -1,4 +1,4 @@
-public enum DBLoginResult
+public enum LoginResult
 {
     UnknownError,
     Success,
@@ -7,7 +7,7 @@ public enum DBLoginResult
     Timeout
 }
 
-public enum DBSignUpResult
+public enum SignUpResult
 {
     UnknownError,
     Success,

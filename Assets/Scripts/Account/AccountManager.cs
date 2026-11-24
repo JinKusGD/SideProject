@@ -9,19 +9,19 @@ public sealed class AccountManager : IAccountService
 
     public uint AccountUid { get; private set; }
 
-    public async UniTask<DBLoginResult> LoginAsync(string id, string password, CancellationToken cancellationToken)
+    public async UniTask<LoginResult> LoginAsync(string id, string password, CancellationToken cancellationToken)
     {
-        DBLoginPacket dbLoginPacket = await NetworkManager.Instance.RequestLoginAsync(id, password, cancellationToken);
+        LoginPacket loginPacket = await NetworkManager.Instance.RequestLoginAsync(id, password, cancellationToken);
 
-        if (dbLoginPacket.DBLoginResult == DBLoginResult.Success)
+        if (loginPacket.LoginResult == LoginResult.Success)
         {
-            AccountUid = dbLoginPacket.AccountUid;
+            AccountUid = loginPacket.AccountUid;
         }
 
-        return dbLoginPacket.DBLoginResult;
+        return loginPacket.LoginResult;
     }
 
-    public UniTask<DBSignUpResult> SignUpAsync(string id, string password, CancellationToken cancellationToken)
+    public UniTask<SignUpResult> SignUpAsync(string id, string password, CancellationToken cancellationToken)
     {
         return NetworkManager.Instance.RequestSignUpAsync(id, password, cancellationToken);
     }

@@ -30,11 +30,11 @@ public sealed class LoginPresenter
         SetSubmitting(true);
         _view.ShowInfo(LocalizationKeys.UiLoginInProgress);
 
-        DBLoginResult dbLoginResult;
+        LoginResult loginResult;
 
         try
         {
-            dbLoginResult = await _accountService.LoginAsync(id, password, cancellationToken);
+            loginResult = await _accountService.LoginAsync(id, password, cancellationToken);
         }
         catch (OperationCanceledException)
         {
@@ -53,7 +53,7 @@ public sealed class LoginPresenter
             return;
         }
 
-        HandleLoginResult(dbLoginResult);
+        HandleLoginResult(loginResult);
     }
 
     private bool ValidateInput(string id, string password)
@@ -73,9 +73,9 @@ public sealed class LoginPresenter
         return true;
     }
 
-    private void HandleLoginResult(DBLoginResult dbLoginResult)
+    private void HandleLoginResult(LoginResult loginResult)
     {
-        if (dbLoginResult == DBLoginResult.Success)
+        if (loginResult == LoginResult.Success)
         {
             SceneTransition.Start(new GameEntryLoadPlan());
             return;
@@ -83,16 +83,16 @@ public sealed class LoginPresenter
 
         SetSubmitting(false);
 
-        switch (dbLoginResult)
+        switch (loginResult)
         {
-            case DBLoginResult.AccountNotFound:
+            case LoginResult.AccountNotFound:
                 _view.ClearPassword();
                 _view.ShowErrorAndFocus(AccountInputField.Password, LocalizationKeys.UiLoginFailed);
                 break;
-            case DBLoginResult.ServerUnavailable:
+            case LoginResult.ServerUnavailable:
                 _view.ShowError(LocalizationKeys.UiAccountConnectionError);
                 break;
-            case DBLoginResult.Timeout:
+            case LoginResult.Timeout:
                 _view.ShowError(LocalizationKeys.UiAccountTimeout);
                 break;
             default:

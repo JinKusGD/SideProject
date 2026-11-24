@@ -6,14 +6,14 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public readonly struct DBLoginPacket
+public readonly struct LoginPacket
 {
-    public readonly DBLoginResult DBLoginResult;
+    public readonly LoginResult LoginResult;
     public readonly uint AccountUid;
 
-    public DBLoginPacket(DBLoginResult dbLoginResult, uint accountUid)
+    public LoginPacket(LoginResult loginResult, uint accountUid)
     {
-        DBLoginResult = dbLoginResult;
+        LoginResult = loginResult;
         AccountUid = accountUid;
     }
 }
@@ -47,7 +47,7 @@ public class AccountApiClient
     private const long StatusServiceUnavailable = 503;
     private const long StatusGatewayTimeout = 504;
 
-    public async UniTask<DBLoginPacket> LoginAsync(string id, string password, CancellationToken cancellationToken)
+    public async UniTask<LoginPacket> LoginAsync(string id, string password, CancellationToken cancellationToken)
     {
         using UnityWebRequest request = CreatePostRequest(LoginPath, id, password);
 
@@ -57,20 +57,20 @@ public class AccountApiClient
         {
             case StatusOk:
                 LoginResponse loginResponse = JsonUtility.FromJson<LoginResponse>(request.downloadHandler.text);
-                return new DBLoginPacket(DBLoginResult.Success, loginResponse.UId);
+                return new LoginPacket(LoginResult.Success, loginResponse.UId);
             case StatusUnauthorized:
-                return new DBLoginPacket(DBLoginResult.AccountNotFound, uint.MinValue);
+                return new LoginPacket(LoginResult.AccountNotFound, uint.MinValue);
             case StatusNoResponse:
             case StatusServiceUnavailable:
-                return new DBLoginPacket(DBLoginResult.ServerUnavailable, uint.MinValue);
+                return new LoginPacket(LoginResult.ServerUnavailable, uint.MinValue);
             case StatusGatewayTimeout:
-                return new DBLoginPacket(DBLoginResult.Timeout, uint.MinValue);
+                return new LoginPacket(LoginResult.Timeout, uint.MinValue);
             default:
-                return new DBLoginPacket(DBLoginResult.UnknownError, uint.MinValue);
+                return new LoginPacket(LoginResult.UnknownError, uint.MinValue);
         }
     }
 
-    public async UniTask<DBSignUpResult> SignUpAsync(string id, string password, CancellationToken cancellationToken)
+    public async UniTask<SignUpResult> SignUpAsync(string id, string password, CancellationToken cancellationToken)
     {
         using UnityWebRequest request = CreatePostRequest(SignUpPath, id, password);
 
@@ -79,16 +79,16 @@ public class AccountApiClient
         switch (responseCode)
         {
             case StatusOk:
-                return DBSignUpResult.Success;
+                return SignUpResult.Success;
             case StatusConflict:
-                return DBSignUpResult.AccountAlreadyExists;
+                return SignUpResult.AccountAlreadyExists;
             case StatusNoResponse:
             case StatusServiceUnavailable:
-                return DBSignUpResult.ServerUnavailable;
+                return SignUpResult.ServerUnavailable;
             case StatusGatewayTimeout:
-                return DBSignUpResult.Timeout;
+                return SignUpResult.Timeout;
             default:
-                return DBSignUpResult.UnknownError;
+                return SignUpResult.UnknownError;
         }
     }
 

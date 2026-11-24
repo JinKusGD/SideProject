@@ -30,11 +30,11 @@ public sealed class SignUpPresenter
         SetSubmitting(true);
         _view.ShowInfo(LocalizationKeys.UiSignUpInProgress);
 
-        DBSignUpResult dbSignUpResult;
+        SignUpResult signUpResult;
 
         try
         {
-            dbSignUpResult = await _accountService.SignUpAsync(id, password, cancellationToken);
+            signUpResult = await _accountService.SignUpAsync(id, password, cancellationToken);
         }
         catch (OperationCanceledException)
         {
@@ -53,7 +53,7 @@ public sealed class SignUpPresenter
             return;
         }
 
-        HandleSignUpResult(dbSignUpResult, id);
+        HandleSignUpResult(signUpResult, id);
     }
 
     private bool ValidateInput(string id, string password, string passwordConfirm)
@@ -87,22 +87,22 @@ public sealed class SignUpPresenter
         return true;
     }
 
-    private void HandleSignUpResult(DBSignUpResult dbSignUpResult, string id)
+    private void HandleSignUpResult(SignUpResult signUpResult, string id)
     {
         SetSubmitting(false);
 
-        switch (dbSignUpResult)
+        switch (signUpResult)
         {
-            case DBSignUpResult.Success:
+            case SignUpResult.Success:
                 _view.CompleteSignUp(id);
                 break;
-            case DBSignUpResult.AccountAlreadyExists:
+            case SignUpResult.AccountAlreadyExists:
                 _view.ShowErrorAndFocus(AccountInputField.Id, LocalizationKeys.UiSignUpDuplicateId);
                 break;
-            case DBSignUpResult.ServerUnavailable:
+            case SignUpResult.ServerUnavailable:
                 _view.ShowError(LocalizationKeys.UiAccountConnectionError);
                 break;
-            case DBSignUpResult.Timeout:
+            case SignUpResult.Timeout:
                 _view.ShowError(LocalizationKeys.UiAccountTimeout);
                 break;
             default:
