@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 
 [RequireComponent(typeof(VideoPlayer))]
-public class LoadingBackgroundVideo : MonoBehaviour
+public class BackgroundVideo : MonoBehaviour
 {
     private const int FallbackWidth = 1920;
     private const int FallbackHeight = 1080;
@@ -51,7 +51,7 @@ public class LoadingBackgroundVideo : MonoBehaviour
     {
         if (!HasVideoSource())
         {
-            DebugUtility.LogWarning($"{nameof(LoadingBackgroundVideo)}: no video source assigned. Showing poster only.");
+            DebugUtility.LogWarning($"{nameof(BackgroundVideo)}: no video source assigned. Showing poster only.");
             enabled = false;
             return;
         }
@@ -100,7 +100,7 @@ public class LoadingBackgroundVideo : MonoBehaviour
 
     private void OnErrorReceived(VideoPlayer source, string message)
     {
-        DebugUtility.LogWarning($"{nameof(LoadingBackgroundVideo)}: video playback failed. {message}");
+        DebugUtility.LogWarning($"{nameof(BackgroundVideo)}: video playback failed. {message}");
 
         _rawImage.enabled = false;
         _rawImage.texture = null;

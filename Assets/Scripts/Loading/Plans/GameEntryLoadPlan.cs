@@ -5,7 +5,7 @@ public sealed class GameEntryLoadPlan : ILoadPlan
 {
     public string TargetSceneName => SceneNames.Game;
 
-    public string LoadingSceneName => null;
+    public string LoadingSceneName => SceneNames.Loading;
 
     public IReadOnlyList<ILoadStep> CreateSteps()
     {
