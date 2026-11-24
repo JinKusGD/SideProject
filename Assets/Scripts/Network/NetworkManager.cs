@@ -5,17 +5,17 @@ public sealed class NetworkManager
 {
     public static NetworkManager Instance { get; } = new NetworkManager();
  
-    private readonly DatabaseService _databaseService = new DatabaseService();
+    private readonly AccountApiClient _accountApiClient = new AccountApiClient();
 
     private NetworkManager() { }
 
     public UniTask<DBLoginPacket> RequestLoginAsync(string id, string password, CancellationToken cancellationToken)
     {
-        return _databaseService.LoginAsync(id, password, cancellationToken);
+        return _accountApiClient.LoginAsync(id, password, cancellationToken);
     }
 
     public UniTask<DBSignUpResult> RequestSignUpAsync(string id, string password, CancellationToken cancellationToken)
     {
-        return _databaseService.SignUpAsync(id, password, cancellationToken);
+        return _accountApiClient.SignUpAsync(id, password, cancellationToken);
     }
 }

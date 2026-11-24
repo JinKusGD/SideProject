@@ -48,3 +48,10 @@ Assets/Ignore.meta
 ### [ Addressables ] ###
 # 원격 콘텐츠 빌드 결과물
 /[Ss]erver[Dd]ata/
+
+### [DBWebServer ] ###
+# 데이터베이스 웹서버 설정
+DBWebServer/obj
+DBWebServer/Properties
+DBWebServer/appsettings.json
+DBWebServer/appsettings.Development.json
